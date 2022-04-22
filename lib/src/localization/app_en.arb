@@ -1,0 +1,6 @@
+{
+  "appTitle": "amphitheatre_desktop",
+  "@appTitle": {
+    "description": "The title of the application"
+  }
+}
