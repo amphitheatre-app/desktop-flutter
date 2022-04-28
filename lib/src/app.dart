@@ -1,3 +1,4 @@
+import 'package:amphitheatre_desktop/src/plays/plays_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
           // Provide the generated AppLocalizations to the MaterialApp. This
           // allows descendant Widgets to display the correct translations
           // depending on the user's locale.
-          localizationsDelegates: const [
+          localizationsDelegates: [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
@@ -79,6 +80,7 @@ class MyApp extends StatelessWidget {
           //     },
           //   );
           // },
+          debugShowCheckedModeBanner: false
         );
       },
     );
@@ -95,7 +97,7 @@ class MyStatefulWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   static List<Widget> pages = <Widget>[
-    Container(color: Colors.blue),
+    const PlaysView(),
     Container(color: Colors.green),
     Container(color: Colors.indigo),
   ];
@@ -121,7 +123,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               NavigationRailDestination(
                 icon: Icon(Icons.favorite_border),
                 selectedIcon: Icon(Icons.favorite),
-                label: Text('First'),
+                label: Text('Plays'),
               ),
               NavigationRailDestination(
                 icon: Icon(Icons.bookmark_border),
