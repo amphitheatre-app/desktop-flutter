@@ -93,6 +93,14 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+
+  static List<Widget> pages = <Widget>[
+    Container(color: Colors.blue),
+    Container(color: Colors.green),
+    Container(color: Colors.indigo),
+  ];
+
+  PageController pageController = PageController();
   int _selectedIndex = 0;
 
   @override
@@ -105,6 +113,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             onDestinationSelected: (int index) {
               setState(() {
                 _selectedIndex = index;
+                pageController.jumpToPage(index);
               });
             },
             labelType: NavigationRailLabelType.selected,
@@ -129,8 +138,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           const VerticalDivider(thickness: 1, width: 1),
           // This is the main content.
           Expanded(
-            child: Center(
-              child: Text('selectedIndex: $_selectedIndex'),
+            child: PageView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: pageController,
+              children: pages,
             ),
           )
         ],
@@ -138,4 +149,3 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     );
   }
 }
-
