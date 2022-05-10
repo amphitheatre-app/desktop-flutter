@@ -27,61 +27,60 @@ class MyApp extends StatelessWidget {
       animation: settingsController,
       builder: (BuildContext context, Widget? child) {
         return MaterialApp(
-          // Providing a restorationScopeId allows the Navigator built by the
-          // MaterialApp to restore the navigation stack when a user leaves and
-          // returns to the app after it has been killed while running in the
-          // background.
-          restorationScopeId: 'app',
+            // Providing a restorationScopeId allows the Navigator built by the
+            // MaterialApp to restore the navigation stack when a user leaves and
+            // returns to the app after it has been killed while running in the
+            // background.
+            restorationScopeId: 'app',
 
-          // Provide the generated AppLocalizations to the MaterialApp. This
-          // allows descendant Widgets to display the correct translations
-          // depending on the user's locale.
-          localizationsDelegates: [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: const [
-            Locale('en', ''), // English, no country code
-          ],
+            // Provide the generated AppLocalizations to the MaterialApp. This
+            // allows descendant Widgets to display the correct translations
+            // depending on the user's locale.
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en', ''), // English, no country code
+            ],
 
-          // Use AppLocalizations to configure the correct application title
-          // depending on the user's locale.
-          //
-          // The appTitle is defined in .arb files found in the localization
-          // directory.
-          onGenerateTitle: (BuildContext context) =>
-              AppLocalizations.of(context)!.appTitle,
+            // Use AppLocalizations to configure the correct application title
+            // depending on the user's locale.
+            //
+            // The appTitle is defined in .arb files found in the localization
+            // directory.
+            onGenerateTitle: (BuildContext context) =>
+                AppLocalizations.of(context)!.appTitle,
 
-          // Define a light and dark color theme. Then, read the user's
-          // preferred ThemeMode (light, dark, or system default) from the
-          // SettingsController to display the correct theme.
-          theme: ThemeData(),
-          darkTheme: ThemeData.dark(),
-          themeMode: settingsController.themeMode,
-          home: const MyStatefulWidget(),
+            // Define a light and dark color theme. Then, read the user's
+            // preferred ThemeMode (light, dark, or system default) from the
+            // SettingsController to display the correct theme.
+            theme: ThemeData(),
+            darkTheme: ThemeData.dark(),
+            themeMode: settingsController.themeMode,
+            home: const MyStatefulWidget(),
 
-          // Define a function to handle named routes in order to support
-          // Flutter web url navigation and deep linking.
-          // onGenerateRoute: (RouteSettings routeSettings) {
-          //   return MaterialPageRoute<void>(
-          //     settings: routeSettings,
-          //     builder: (BuildContext context) {
-          //       switch (routeSettings.name) {
-          //         case SettingsView.routeName:
-          //           return SettingsView(controller: settingsController);
-          //         case SampleItemDetailsView.routeName:
-          //           return const SampleItemDetailsView();
-          //         case SampleItemListView.routeName:
-          //         default:
-          //           return const SampleItemListView();
-          //       }
-          //     },
-          //   );
-          // },
-          debugShowCheckedModeBanner: false
-        );
+            // Define a function to handle named routes in order to support
+            // Flutter web url navigation and deep linking.
+            // onGenerateRoute: (RouteSettings routeSettings) {
+            //   return MaterialPageRoute<void>(
+            //     settings: routeSettings,
+            //     builder: (BuildContext context) {
+            //       switch (routeSettings.name) {
+            //         case SettingsView.routeName:
+            //           return SettingsView(controller: settingsController);
+            //         case SampleItemDetailsView.routeName:
+            //           return const SampleItemDetailsView();
+            //         case SampleItemListView.routeName:
+            //         default:
+            //           return const SampleItemListView();
+            //       }
+            //     },
+            //   );
+            // },
+            debugShowCheckedModeBanner: false);
       },
     );
   }
@@ -95,7 +94,6 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-
   static List<Widget> pages = <Widget>[
     const PlaysView(),
     Container(color: Colors.green),
@@ -107,43 +105,66 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final NavigationRailThemeData navigationRailTheme =
+        NavigationRailTheme.of(context);
+    final Color backgroundColor =
+        navigationRailTheme.backgroundColor ?? theme.colorScheme.surface;
+
     return Scaffold(
       body: Row(
         children: <Widget>[
-          NavigationRail(
-            selectedIndex: _selectedIndex,
-            onDestinationSelected: (int index) {
-              setState(() {
-                _selectedIndex = index;
-                pageController.jumpToPage(index);
-              });
-            },
-            labelType: NavigationRailLabelType.all,
-            leading: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.account_circle, size: 32),
+          Container(
+            color: backgroundColor,
+            child: Column(
+              children: [
+                Expanded(
+                  child: NavigationRail(
+                    groupAlignment: -1.0,
+                    selectedIndex: _selectedIndex,
+                    onDestinationSelected: (int index) {
+                      setState(() {
+                        _selectedIndex = index;
+                        pageController.jumpToPage(index);
+                      });
+                    },
+                    labelType: NavigationRailLabelType.all,
+                    leading: CircleAvatar(
+                      backgroundColor: Colors.blueGrey,
+                      radius: 20,
+                      child: IconButton(
+                        padding: EdgeInsets.zero,
+                        icon: const Icon(Icons.account_circle),
+                        color: Colors.white,
+                        onPressed: () {},
+                      ),
+                    ),
+                    destinations: const <NavigationRailDestination>[
+                      NavigationRailDestination(
+                        icon: Icon(Icons.rocket_launch),
+                        selectedIcon: Icon(Icons.rocket_launch),
+                        label: Text('Plays'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.apps_outlined),
+                        selectedIcon: Icon(Icons.apps),
+                        label: Text('Apps'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.extension_sharp),
+                        selectedIcon: Icon(Icons.extension),
+                        label: Text('Addons'),
+                      ),
+                    ],
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.help_outline_rounded),
+                  padding: const EdgeInsets.only(bottom: 20),
+                )
+              ],
             ),
-            trailing: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.add_circle),
-            ),
-            destinations: const <NavigationRailDestination>[
-              NavigationRailDestination(
-                icon: Icon(Icons.rocket_launch_outlined),
-                selectedIcon: Icon(Icons.rocket_launch),
-                label: Text('Plays'),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.apps_outlined),
-                selectedIcon: Icon(Icons.apps),
-                label: Text('Apps'),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.extension_sharp),
-                selectedIcon: Icon(Icons.extension),
-                label: Text('Addons'),
-              ),
-            ],
           ),
           const VerticalDivider(thickness: 1, width: 1),
           // This is the main content.

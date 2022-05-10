@@ -68,27 +68,29 @@ class _PlaysViewState extends State<PlaysView>
       child: Column(
         children: [
           AppBar(
-            title: const TextField(
-              style: TextStyle(
-                color: Colors.white,
-              ),
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(0),
-                border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.search, color: Colors.white),
-                  hintText: "Search...",
-                  hintStyle: TextStyle(color: Colors.white)),                  
-            ),
+            title: const Text("Plays"),
             centerTitle: false,
+            elevation: 0.6,
+            //shadowColor: Colors.black,
             actions: [
               IconButton(
-                icon: const Icon(Icons.add),
-                tooltip: 'New',
+                color: Colors.grey,
+                icon: const Icon(Icons.filter_list),
+                tooltip: "Filter",
                 onPressed: () {
                   // handle the press
                 },
-              )
+              ),
+              IconButton(
+                color: Colors.blue,
+                icon: const Icon(Icons.add_circle_outlined),
+                tooltip: "New",
+                onPressed: () {
+                  // handle the press
+                },
+              ),
             ],
+            titleTextStyle: const TextStyle(fontWeight: FontWeight.bold),
           ),
           Expanded(
             child: ListView(
@@ -121,6 +123,7 @@ class _PlaysViewState extends State<PlaysView>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             AppBar(
+              elevation: 0.6,
               title: const Text("Play Detail Page"),
               centerTitle: false,
               actions: <Widget>[
@@ -132,6 +135,7 @@ class _PlaysViewState extends State<PlaysView>
                   },
                 ),
               ],
+              titleTextStyle: const TextStyle(fontWeight: FontWeight.bold),
             ),
             TabBar(controller: tabController, tabs: tabs, isScrollable: true)
           ]),
