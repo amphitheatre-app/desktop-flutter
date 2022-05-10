@@ -125,12 +125,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             ),
             trailing: IconButton(
               onPressed: () {},
-              icon: const Icon(Icons.add),
+              icon: const Icon(Icons.add_circle),
             ),
             destinations: const <NavigationRailDestination>[
               NavigationRailDestination(
-                icon: Icon(Icons.list_outlined),
-                selectedIcon: Icon(Icons.list),
+                icon: Icon(Icons.rocket_launch_outlined),
+                selectedIcon: Icon(Icons.rocket_launch),
                 label: Text('Plays'),
               ),
               NavigationRailDestination(
