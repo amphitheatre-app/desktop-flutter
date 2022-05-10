@@ -118,22 +118,30 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 pageController.jumpToPage(index);
               });
             },
-            labelType: NavigationRailLabelType.selected,
+            labelType: NavigationRailLabelType.all,
+            leading: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.account_circle, size: 32),
+            ),
+            trailing: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.add),
+            ),
             destinations: const <NavigationRailDestination>[
               NavigationRailDestination(
-                icon: Icon(Icons.favorite_border),
-                selectedIcon: Icon(Icons.favorite),
+                icon: Icon(Icons.list_outlined),
+                selectedIcon: Icon(Icons.list),
                 label: Text('Plays'),
               ),
               NavigationRailDestination(
-                icon: Icon(Icons.bookmark_border),
-                selectedIcon: Icon(Icons.book),
-                label: Text('Second'),
+                icon: Icon(Icons.apps_outlined),
+                selectedIcon: Icon(Icons.apps),
+                label: Text('Apps'),
               ),
               NavigationRailDestination(
-                icon: Icon(Icons.star_border),
-                selectedIcon: Icon(Icons.star),
-                label: Text('Third'),
+                icon: Icon(Icons.extension_sharp),
+                selectedIcon: Icon(Icons.extension),
+                label: Text('Addons'),
               ),
             ],
           ),
