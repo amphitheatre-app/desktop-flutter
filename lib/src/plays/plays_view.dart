@@ -1,3 +1,9 @@
+import 'package:amphitheatre_desktop/src/plays/cast.dart';
+import 'package:amphitheatre_desktop/src/plays/environments.dart';
+import 'package:amphitheatre_desktop/src/plays/logs.dart';
+import 'package:amphitheatre_desktop/src/plays/resources.dart';
+import 'package:amphitheatre_desktop/src/plays/stats.dart';
+import 'package:amphitheatre_desktop/src/plays/settings.dart';
 import 'package:flutter/material.dart';
 import 'play.dart';
 
@@ -15,7 +21,7 @@ class _PlaysViewState extends State<PlaysView>
     Tab(text: 'Logs'),
     Tab(text: 'Resources'),
     Tab(text: 'Environment'),
-    Tab(text: 'Metrics'),
+    Tab(text: 'Stats'),
     Tab(text: 'Settings'),
   ];
 
@@ -137,7 +143,19 @@ class _PlaysViewState extends State<PlaysView>
               ],
               titleTextStyle: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            TabBar(controller: tabController, tabs: tabs, isScrollable: true)
+            TabBar(controller: tabController, tabs: tabs, isScrollable: true),
+            Expanded(
+              child: TabBarView(
+                controller: tabController, 
+                children: const <Widget>[
+                  CastView(),
+                  LogsView(),
+                  ResourcesView(),
+                  EnvironmentsView(),
+                  StatsView(),
+                  SettingsView()
+              ]),
+            )
           ]),
     );
   }
