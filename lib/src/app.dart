@@ -1,5 +1,5 @@
 import 'package:amphitheatre_desktop/src/apps/overview.dart';
-import 'package:amphitheatre_desktop/src/plays/plays_view.dart';
+import 'package:amphitheatre_desktop/src/plays/overview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -96,7 +96,7 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static List<Widget> pages = <Widget>[
-    const PlaysView(),
+    const PlaysOverview(),
     const AppsOverview(),
     Container(color: Colors.indigo),
   ];

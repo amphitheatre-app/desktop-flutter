@@ -7,14 +7,14 @@ import 'package:amphitheatre_desktop/src/plays/settings.dart';
 import 'package:flutter/material.dart';
 import 'play.dart';
 
-class PlaysView extends StatefulWidget {
-  const PlaysView({Key? key}) : super(key: key);
+class PlaysOverview extends StatefulWidget {
+  const PlaysOverview({Key? key}) : super(key: key);
 
   @override
-  State<PlaysView> createState() => _PlaysViewState();
+  State<PlaysOverview> createState() => _PlaysOverviewState();
 }
 
-class _PlaysViewState extends State<PlaysView>
+class _PlaysOverviewState extends State<PlaysOverview>
     with SingleTickerProviderStateMixin {
   static const List<Tab> tabs = <Tab>[
     Tab(text: 'Cast'),
