@@ -143,9 +143,10 @@ class _PlaysViewState extends State<PlaysView>
               ],
               titleTextStyle: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            TabBar(controller: tabController, tabs: tabs, isScrollable: true),
+            TabBar(controller: tabController, tabs: tabs, isScrollable: false),
             Expanded(
               child: TabBarView(
+                physics: const NeverScrollableScrollPhysics(),
                 controller: tabController, 
                 children: const <Widget>[
                   CastView(),
