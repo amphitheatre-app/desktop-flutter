@@ -129,7 +129,7 @@ class _PlaysViewState extends State<PlaysView>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             AppBar(
-              elevation: 0.6,
+              elevation: 0.0,
               title: const Text("Play Detail Page"),
               centerTitle: false,
               actions: <Widget>[
