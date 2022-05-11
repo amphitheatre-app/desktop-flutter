@@ -30,7 +30,7 @@ class _PlaysViewState extends State<PlaysView>
   @override
   void initState() {
     super.initState();
-    tabController = TabController(vsync: this, length: tabs.length);
+    tabController = TabController(vsync: this, length: tabs.length, animationDuration: Duration.zero);
   }
 
   @override

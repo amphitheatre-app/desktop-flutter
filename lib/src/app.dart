@@ -1,3 +1,4 @@
+import 'package:amphitheatre_desktop/src/apps/overview.dart';
 import 'package:amphitheatre_desktop/src/plays/plays_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -96,7 +97,7 @@ class MyStatefulWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static List<Widget> pages = <Widget>[
     const PlaysView(),
-    Container(color: Colors.green),
+    const AppsOverview(),
     Container(color: Colors.indigo),
   ];
 
@@ -160,7 +161,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 ),
                 IconButton(
                   onPressed: () {},
-                  icon: const Icon(Icons.help_outline_rounded),
+                  icon: const Icon(Icons.help_outline_rounded, color: Colors.grey),
                   padding: const EdgeInsets.only(bottom: 20),
                 )
               ],
