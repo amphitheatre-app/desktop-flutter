@@ -14,23 +14,75 @@
 
 import 'package:flutter/material.dart';
 
-import '../views/cast.dart';
+import '../views/environments.dart';
+import '../views/logs.dart';
+import '../views/resources.dart';
+import '../views/stats.dart';
+import '../views/settings.dart';
+
+class PlayDetail extends StatefulWidget {
+  const PlayDetail({Key? key}) : super(key: key);
+
+  @override
+  State<PlayDetail> createState() => _PlayDetailState();
+}
 
 enum WhyFarther { harder, smarter, selfStarter, tradingCharter }
 
-class PlaysOverview extends StatelessWidget {
-  const PlaysOverview({Key? key}) : super(key: key);
+class _PlayDetailState extends State<PlayDetail>
+    with SingleTickerProviderStateMixin {
+  static const List<Tab> tabs = <Tab>[
+    Tab(text: 'Logs'),
+    Tab(text: 'Resources'),
+    Tab(text: 'Environment'),
+    Tab(text: 'Stats'),
+    Tab(text: 'Settings'),
+  ];
+
+  late TabController tabController;
+  late WhyFarther _selection;
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(
+        vsync: this, length: tabs.length, animationDuration: Duration.zero);
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(context),
-      body: const CastView()
+      body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            TabBar(controller: tabController, tabs: tabs, isScrollable: false),
+            Expanded(
+              child: TabBarView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: tabController,
+                  children: const <Widget>[
+                    LogsView(),
+                    ResourcesView(),
+                    EnvironmentsView(),
+                    StatsView(),
+                    SettingsView()
+                  ]),
+            )
+          ]),
     );
   }
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
+      elevation: 0.0,
       title: buildTitle(context),
       centerTitle: false,
       actions: buildActions(),
@@ -38,23 +90,13 @@ class PlaysOverview extends StatelessWidget {
     );
   }
 
-  Column buildTitle(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text("Clean code linters"),
-        Text("Running",
-            style: Theme.of(context)
-                .textTheme
-                .overline!
-                .copyWith(color: Colors.green)),
-      ],
-    );
-  }
-
   List<Widget> buildActions() {
     return <Widget>[
+      IconButton(
+        icon: const Icon(Icons.terminal_outlined, color: Colors.blue),
+        tooltip: 'Terminal',
+        onPressed: () {},
+      ),
       IconButton(
         icon: const Icon(Icons.play_circle_outlined, color: Colors.blue),
         tooltip: 'Play',
@@ -82,7 +124,11 @@ class PlaysOverview extends StatelessWidget {
   PopupMenuButton<WhyFarther> buildPopupMenuButton() {
     return PopupMenuButton<WhyFarther>(
       icon: Icon(Icons.adaptive.more, color: Colors.blue),
-      onSelected: (WhyFarther result) {},
+      onSelected: (WhyFarther result) {
+        setState(() {
+          _selection = result;
+        });
+      },
       itemBuilder: (BuildContext context) => <PopupMenuEntry<WhyFarther>>[
         const PopupMenuItem<WhyFarther>(
           value: WhyFarther.harder,
@@ -100,6 +146,21 @@ class PlaysOverview extends StatelessWidget {
           value: WhyFarther.tradingCharter,
           child: Text('Placed in charge of trading charter'),
         ),
+      ],
+    );
+  }
+
+  Column buildTitle(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text("Clean code linters"),
+        Text("Running",
+            style: Theme.of(context)
+                .textTheme
+                .overline!
+                .copyWith(color: Colors.green)),
       ],
     );
   }

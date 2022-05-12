@@ -59,7 +59,7 @@ class PlaysListView extends StatelessWidget {
         scrollDirection: Axis.vertical,
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         itemCount: plays.length,
-        separatorBuilder: (BuildContext context, int index) => const Divider(),
+        separatorBuilder: (BuildContext context, int index) => const Divider(height: 1,),
         itemBuilder: (BuildContext context, int index) {
           return ListItemView(play: plays[index]);
         });
@@ -74,16 +74,19 @@ class ListItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      contentPadding: const EdgeInsets.all(8.0),
       leading: TextAvatar(
           shape: Shape.Circular,
           size: 32,
           numberLetters: 2,
           upperCase: true,
           text: play.title,
+          backgroundColor: Colors.blueGrey,
         ),
       title: Text(play.title),
       subtitle:
           Text(play.description, maxLines: 3, overflow: TextOverflow.ellipsis),
+      onTap: () {},
     );
   }
 }

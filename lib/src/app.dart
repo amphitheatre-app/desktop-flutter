@@ -17,8 +17,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'app/pages/overview.dart';
-import 'play/pages/overview.dart';
+import 'app/pages/screen.dart';
+import 'play/pages/screen.dart';
 
 // import 'sample_feature/sample_item_details_view.dart';
 // import 'sample_feature/sample_item_list_view.dart';
@@ -112,8 +112,8 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static List<Widget> pages = <Widget>[
-    const PlaysOverview(),
-    const AppsOverview(),
+    const PlaysScreen(),
+    const AppsScreen(),
     Container(color: Colors.indigo),
   ];
 

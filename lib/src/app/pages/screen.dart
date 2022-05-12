@@ -14,14 +14,14 @@
 
 import 'package:flutter/material.dart';
 
-class AppsOverview extends StatefulWidget {
-  const AppsOverview({Key? key}) : super(key: key);
+class AppsScreen extends StatefulWidget {
+  const AppsScreen({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _AppsOverviewState();
+  State<StatefulWidget> createState() => _AppsScreenState();
 }
 
-class _AppsOverviewState extends State<AppsOverview> {
+class _AppsScreenState extends State<AppsScreen> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
