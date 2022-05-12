@@ -1,11 +1,27 @@
-import 'package:amphitheatre_desktop/src/plays/cast.dart';
-import 'package:amphitheatre_desktop/src/plays/environments.dart';
-import 'package:amphitheatre_desktop/src/plays/logs.dart';
-import 'package:amphitheatre_desktop/src/plays/resources.dart';
-import 'package:amphitheatre_desktop/src/plays/stats.dart';
-import 'package:amphitheatre_desktop/src/plays/settings.dart';
+// Copyright 2022 The Amphitheatre Authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 import 'package:flutter/material.dart';
-import 'play.dart';
+
+import '../views/cast.dart';
+import '../views/environments.dart';
+import '../views/logs.dart';
+import '../views/resources.dart';
+import '../views/stats.dart';
+import '../views/settings.dart';
+
+import '../models/play.dart';
 
 class PlaysOverview extends StatefulWidget {
   const PlaysOverview({Key? key}) : super(key: key);
@@ -156,7 +172,11 @@ class _PlaysOverviewState extends State<PlaysOverview>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text("Clean code linters"),
-                  Text("Running", style: Theme.of(context).textTheme.overline!.copyWith(color: Colors.green)),
+                  Text("Running",
+                      style: Theme.of(context)
+                          .textTheme
+                          .overline!
+                          .copyWith(color: Colors.green)),
                 ],
               ),
               centerTitle: false,
