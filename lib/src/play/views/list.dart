@@ -64,14 +64,25 @@ class PlaysListView extends StatelessWidget {
             separatorBuilder: (BuildContext context, int index) =>
                 const Divider(),
             itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                leading: const Icon(Icons.facebook),
-                title: Text(plays[index].title),
-                subtitle: Text(plays[index].description,
-                    maxLines: 3, overflow: TextOverflow.ellipsis),
-              );
+              return ListItemView(play: plays[index]);
             })
       ],
+    );
+  }
+}
+
+class ListItemView extends StatelessWidget {
+  const ListItemView({Key? key, required this.play}) : super(key: key);
+
+  final Play play;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: const Icon(Icons.facebook),
+      title: Text(play.title),
+      subtitle:
+          Text(play.description, maxLines: 3, overflow: TextOverflow.ellipsis),
     );
   }
 }
