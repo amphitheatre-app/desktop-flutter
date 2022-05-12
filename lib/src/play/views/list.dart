@@ -14,6 +14,8 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:colorize_text_avatar/colorize_text_avatar.dart';
+
 import '../models/play.dart';
 
 class PlaysListView extends StatelessWidget {
@@ -53,21 +55,14 @@ class PlaysListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      children: [
-        ListView.separated(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            physics: const ScrollPhysics(),
-            itemCount: plays.length,
-            separatorBuilder: (BuildContext context, int index) =>
-                const Divider(),
-            itemBuilder: (BuildContext context, int index) {
-              return ListItemView(play: plays[index]);
-            })
-      ],
-    );
+    return ListView.separated(
+        scrollDirection: Axis.vertical,
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        itemCount: plays.length,
+        separatorBuilder: (BuildContext context, int index) => const Divider(),
+        itemBuilder: (BuildContext context, int index) {
+          return ListItemView(play: plays[index]);
+        });
   }
 }
 
@@ -79,7 +74,13 @@ class ListItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: const Icon(Icons.facebook),
+      leading: TextAvatar(
+          shape: Shape.Circular,
+          size: 32,
+          numberLetters: 2,
+          upperCase: true,
+          text: play.title,
+        ),
       title: Text(play.title),
       subtitle:
           Text(play.description, maxLines: 3, overflow: TextOverflow.ellipsis),
