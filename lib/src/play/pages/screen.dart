@@ -14,9 +14,9 @@
 
 import 'package:flutter/material.dart';
 
-import 'detail.dart';
+//import 'detail.dart';
 import 'sidebar.dart';
-//import 'overview.dart';
+import 'overview.dart';
 
 class PlaysScreen extends StatefulWidget {
   const PlaysScreen({Key? key}) : super(key: key);
@@ -47,7 +47,7 @@ class _PlaysScreenState extends State<PlaysScreen> {
   }
 
   Widget pageItemBuilder(BuildContext context, int index) {
-    //return const PlaysOverview();
-    return const PlayDetail();
+    return const PlaysOverview();
+    //return const PlayDetail();
   }
 }
