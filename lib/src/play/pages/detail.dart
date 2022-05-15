@@ -14,11 +14,9 @@
 
 import 'package:flutter/material.dart';
 
-import '../views/environments.dart';
 import '../views/logs.dart';
-import '../views/resources.dart';
+import '../views/inspect.dart';
 import '../views/stats.dart';
-import '../views/settings.dart';
 import '../views/title_toggle_button.dart';
 
 import 'cast.dart';
@@ -36,10 +34,8 @@ class _PlayDetailState extends State<PlayDetail>
     with SingleTickerProviderStateMixin {
   static const List<Tab> tabs = <Tab>[
     Tab(text: 'Logs'),
-    Tab(text: 'Resources'),
-    Tab(text: 'Environment'),
+    Tab(text: 'Inspect'),
     Tab(text: 'Stats'),
-    Tab(text: 'Settings'),
   ];
 
   late TabController tabController;
@@ -76,10 +72,8 @@ class _PlayDetailState extends State<PlayDetail>
                   controller: tabController,
                   children: const <Widget>[
                     LogsView(),
-                    ResourcesView(),
-                    EnvironmentsView(),
+                    InspectView(),
                     StatsView(),
-                    SettingsView()
                   ]),
             )
           ]),
