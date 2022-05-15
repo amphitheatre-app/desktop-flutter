@@ -33,7 +33,7 @@ class _PlaysScreenState extends State<PlaysScreen> {
     return Expanded(
       child: Row(
         children: <Widget>[
-          const SizedBox(child: PlayListSidebar(), width: 280),
+          SizedBox(child: PlayListSidebar(), width: 280),
           const VerticalDivider(width: 1),
           Expanded(
             child: PageView.builder(

@@ -17,29 +17,29 @@ import 'package:flutter/material.dart';
 import '../views/list.dart';
 
 class PlayListSidebar extends StatelessWidget {
-  const PlayListSidebar({Key? key}) : super(key: key);
+  PlayListSidebar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
+      appBar: buildAppBar(context),
       body: PlayListView(),
     );
   }
 
-  AppBar buildAppBar() {
+  AppBar buildAppBar(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
       title: const Text("Amphitheatre"),
       centerTitle: false,
       elevation: 0.6,
       //shadowColor: Colors.black,
-      actions: buildActions(),
+      actions: buildActions(context),
       titleTextStyle: const TextStyle(fontWeight: FontWeight.bold),
     );
   }
 
-  List<Widget> buildActions() {
+  List<Widget> buildActions(BuildContext context) {
     return <Widget>[
       IconButton(
         color: Colors.grey,
@@ -54,9 +54,136 @@ class PlayListSidebar extends StatelessWidget {
         icon: const Icon(Icons.add_circle_outlined),
         tooltip: "New",
         onPressed: () {
-          // handle the press
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Modal(
+                    title: "New play",
+                    body: buildForm(),
+                    actions: <Widget>[
+                      ElevatedButton(
+                        onPressed: () {
+                          // Validate will return true if the form is valid, or false if
+                          // the form is invalid.
+                          if (_formKey.currentState!.validate()) {
+                            // Process data.
+                          }
+                        },
+                        child: const Text('Submit'),
+                      )
+                    ]);
+              });
         },
       ),
     ];
+  }
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  Widget buildForm() {
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.0),
+            child: Text("Title"),
+          ),
+          TextFormField(
+            decoration: const InputDecoration(
+                hintText: 'Play title',
+                border: OutlineInputBorder(),
+                contentPadding: EdgeInsets.all(8)),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.0),
+            child: Text("Description"),
+          ),
+          TextFormField(
+            maxLines: 3,
+            decoration: const InputDecoration(
+                hintText: 'Add description...',
+                border: OutlineInputBorder(),
+                contentPadding: EdgeInsets.all(8)),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.0),
+            child: Text("Repository"),
+          ),
+          TextFormField(
+            decoration: const InputDecoration(
+                hintText:
+                    'An SSH URL, like git@github.com:user/repo.git',
+                border: OutlineInputBorder(),
+                contentPadding: EdgeInsets.all(8)),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class Modal extends StatelessWidget {
+  final String title;
+  final Widget body;
+  final List<Widget>? actions;
+
+  const Modal({
+    Key? key,
+    required this.title,
+    required this.body,
+    this.actions,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Center(
+          child: Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).dialogBackgroundColor,
+              ),
+              constraints: const BoxConstraints(
+                  minWidth: 300, maxWidth: 600, minHeight: 200, maxHeight: 400),
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  Row(children: [
+                    Expanded(child: Text(title, maxLines: 1)),
+                    IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(
+                          Icons.close,
+                          size: 16,
+                        ))
+                  ]),
+                  Expanded(child: SingleChildScrollView(child: body)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: actions != null ? actions! : [],
+                  )
+                ],
+              ))),
+    );
   }
 }
