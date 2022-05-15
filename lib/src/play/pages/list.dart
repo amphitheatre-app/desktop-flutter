@@ -30,7 +30,7 @@ class PlayListSidebar extends StatelessWidget {
   AppBar buildAppBar() {
     return AppBar(
       automaticallyImplyLeading: false,
-      title: const Text("Plays"),
+      title: const Text("Amphitheatre"),
       centerTitle: false,
       elevation: 0.6,
       //shadowColor: Colors.black,

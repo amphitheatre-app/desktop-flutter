@@ -131,60 +131,60 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     return Scaffold(
       body: Row(
         children: <Widget>[
-          Container(
-            color: backgroundColor,
-            child: Column(
-              children: [
-                Expanded(
-                  child: NavigationRail(
-                    groupAlignment: -1.0,
-                    selectedIndex: _selectedIndex,
-                    onDestinationSelected: (int index) {
-                      setState(() {
-                        _selectedIndex = index;
-                        pageController.jumpToPage(index);
-                      });
-                    },
-                    labelType: NavigationRailLabelType.all,
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.blueGrey,
-                      radius: 20,
-                      child: IconButton(
-                        padding: EdgeInsets.zero,
-                        icon: const Icon(Icons.account_circle),
-                        color: Colors.white,
-                        onPressed: () {},
-                      ),
-                    ),
-                    destinations: const <NavigationRailDestination>[
-                      NavigationRailDestination(
-                        icon: Icon(Icons.rocket_launch),
-                        selectedIcon: Icon(Icons.rocket_launch),
-                        label: Text('Plays'),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(Icons.apps_outlined),
-                        selectedIcon: Icon(Icons.apps),
-                        label: Text('Apps'),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(Icons.extension_sharp),
-                        selectedIcon: Icon(Icons.extension),
-                        label: Text('Addons'),
-                      ),
-                    ],
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.help_outline_rounded, color: Colors.grey),
-                  padding: const EdgeInsets.only(bottom: 20),
-                )
-              ],
-            ),
-          ),
-          const VerticalDivider(thickness: 1, width: 1),
-          // This is the main content.
+          // Container(
+          //   color: backgroundColor,
+          //   child: Column(
+          //     children: [
+          //       Expanded(
+          //         child: NavigationRail(
+          //           groupAlignment: -1.0,
+          //           selectedIndex: _selectedIndex,
+          //           onDestinationSelected: (int index) {
+          //             setState(() {
+          //               _selectedIndex = index;
+          //               pageController.jumpToPage(index);
+          //             });
+          //           },
+          //           labelType: NavigationRailLabelType.all,
+          //           leading: CircleAvatar(
+          //             backgroundColor: Colors.blueGrey,
+          //             radius: 20,
+          //             child: IconButton(
+          //               padding: EdgeInsets.zero,
+          //               icon: const Icon(Icons.account_circle),
+          //               color: Colors.white,
+          //               onPressed: () {},
+          //             ),
+          //           ),
+          //           destinations: const <NavigationRailDestination>[
+          //             NavigationRailDestination(
+          //               icon: Icon(Icons.rocket_launch),
+          //               selectedIcon: Icon(Icons.rocket_launch),
+          //               label: Text('Plays'),
+          //             ),
+          //             NavigationRailDestination(
+          //               icon: Icon(Icons.apps_outlined),
+          //               selectedIcon: Icon(Icons.apps),
+          //               label: Text('Apps'),
+          //             ),
+          //             NavigationRailDestination(
+          //               icon: Icon(Icons.extension_sharp),
+          //               selectedIcon: Icon(Icons.extension),
+          //               label: Text('Addons'),
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //       IconButton(
+          //         onPressed: () {},
+          //         icon: const Icon(Icons.help_outline_rounded, color: Colors.grey),
+          //         padding: const EdgeInsets.only(bottom: 20),
+          //       )
+          //     ],
+          //   ),
+          // ),
+          // const VerticalDivider(thickness: 1, width: 1),
+          // // This is the main content.
           Expanded(
             child: PageView(
               physics: const NeverScrollableScrollPhysics(),
