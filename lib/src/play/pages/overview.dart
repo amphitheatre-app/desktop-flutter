@@ -14,7 +14,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../views/cast.dart';
+import '../views/cast/cast_form_views.dart';
 
 enum WhyFarther { harder, smarter, selfStarter, tradingCharter }
 
@@ -25,7 +25,7 @@ class PlaysOverview extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(context),
-      body: const CastView()
+      body: const CastFormItemsView()
     );
   }
 

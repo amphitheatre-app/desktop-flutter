@@ -16,76 +16,84 @@ import 'package:flutter/material.dart';
 
 import 'package:colorize_text_avatar/colorize_text_avatar.dart';
 
-import '../models/play.dart';
+import '../../models/cast.dart';
 
-class PlayListView extends StatelessWidget {
-  PlayListView({Key? key}) : super(key: key);
+class CastListView extends StatefulWidget {
+  const CastListView({Key? key}) : super(key: key);
 
-  final List<Play> plays = <Play>[
-    const Play(1, "Clean code linters",
+  @override
+  State<StatefulWidget> createState() => _CastListViewState();
+}
+
+class _CastListViewState extends State<CastListView> {
+  final List<Cast> cast = <Cast>[
+    const Cast(1, "Clean code linters",
         "Make sure your code matches your style guide with these essential code linters."),
-    const Play(2, "Open journalism",
+    const Cast(2, "Open journalism",
         "See how publications and data-driven journalists use open source to power their newsroom and ensure information is reported fairly and accurately."),
-    const Play(2, "Design essentials",
+    const Cast(2, "Design essentials",
         "This collection of design libraries are the best on the web, and will complete your toolset for designing stunning products."),
-    const Play(2, "Music",
+    const Cast(2, "Music",
         "Drop the code bass with these musically themed repositories."),
-    const Play(2, "Government apps",
+    const Cast(2, "Government apps",
         "Sites, apps, and tools built by governments across the world to make government work better, together. Read more at https://government.github.com"),
-    const Play(2, "DevOps tools",
+    const Cast(2, "DevOps tools",
         "These tools help you manage servers and deploy happier and more often with more confidence."),
-    const Play(2, "Front-end JavaScript frameworks",
+    const Cast(2, "Front-end JavaScript frameworks",
         "While the number of ways to organize JavaScript is almost infinite, here are some tools that help you build single-page applications."),
-    const Play(2, "GitHub Browser Extensions",
+    const Cast(2, "GitHub Browser Extensions",
         "Some useful and fun browser extensions to personalize your GitHub browser experience."),
-    const Play(2, "GitHub Pages examples",
+    const Cast(2, "GitHub Pages examples",
         "Fine examples of projects using GitHub Pages (https://pages.github.com)."),
-    const Play(2, "Hacking Minecraft",
+    const Cast(2, "Hacking Minecraft",
         "Minecraft is a game about building blocks, but it doesn’t end there. Take Minecraft further with some of the projects below, or dive into the code mines and hammer your own!"),
-    const Play(2, "JavaScript Game Engines",
+    const Cast(2, "JavaScript Game Engines",
         "Learn or level up your 1337 gamedev skills and build amazing games together for web, desktop, or mobile using these HTML5 / JavaScript game engines."),
-    const Play(2, "Learn to Code", "Resources to help people learn to code"),
-    const Play(2, "Getting started with machine learning",
+    const Cast(2, "Learn to Code", "Resources to help people learn to code"),
+    const Cast(2, "Getting started with machine learning",
         "Today, machine learning—the study of algorithms that make data-based predictions—has found a new audience and a new set of possibilities."),
-    const Play(2, "Made in Africa",
+    const Cast(2, "Made in Africa",
         "Developers in Africa use open source technology to solve some of the world's most intractable problems and grow their business ecosystems. Here's a snapshot of local projects across the continent."),
-    const Play(2, "Net neutrality",
+    const Cast(2, "Net neutrality",
         "Software, research, and organizations protecting the free and open internet."),
   ];
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
+        itemCount: cast.length,
         scrollDirection: Axis.vertical,
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        itemCount: plays.length,
-        separatorBuilder: (BuildContext context, int index) => const Divider(height: 1),
+        separatorBuilder: (BuildContext context, int index) =>
+            const Divider(height: 1),
         itemBuilder: (BuildContext context, int index) {
-          return ListItemView(play: plays[index]);
+          return CastListItemView(cast: cast[index]);
         });
   }
 }
 
-class ListItemView extends StatelessWidget {
-  const ListItemView({Key? key, required this.play}) : super(key: key);
+class CastListItemView extends StatelessWidget {
+  const CastListItemView({Key? key, required this.cast}) : super(key: key);
 
-  final Play play;
+  final Cast cast;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: const EdgeInsets.all(8.0),
       leading: TextAvatar(
-          shape: Shape.Circular,
-          size: 32,
-          numberLetters: 2,
-          upperCase: true,
-          text: play.title,
-          backgroundColor: Colors.blueGrey,
-        ),
-      title: Text(play.title),
-      subtitle:
-          Text(play.description, maxLines: 3, overflow: TextOverflow.ellipsis),
+        shape: Shape.Circular,
+        size: 32,
+        numberLetters: 2,
+        upperCase: true,
+        text: cast.title,
+        backgroundColor: Colors.blueGrey,
+      ),
+      title: Text(cast.title),
+      trailing: Text(cast.status,
+          style: Theme.of(context)
+              .textTheme
+              .overline!
+              .copyWith(color: Colors.green)),
       onTap: () {},
     );
   }

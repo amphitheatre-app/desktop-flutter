@@ -16,16 +16,16 @@ import 'package:flutter/material.dart';
 
 import 'package:colorize_text_avatar/colorize_text_avatar.dart';
 
-import '../models/cast.dart';
+import '../../models/cast.dart';
 
-class CastView extends StatefulWidget {
-  const CastView({Key? key}) : super(key: key);
+class CastFormItemsView extends StatefulWidget {
+  const CastFormItemsView({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _CastViewState();
+  State<StatefulWidget> createState() => _CastFormItemsViewState();
 }
 
-class _CastViewState extends State<CastView> {
+class _CastFormItemsViewState extends State<CastFormItemsView> {
   final List<Cast> cast = <Cast>[
     const Cast(1, "Clean code linters",
         "Make sure your code matches your style guide with these essential code linters."),
@@ -66,13 +66,13 @@ class _CastViewState extends State<CastView> {
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 8),
         separatorBuilder: (BuildContext context, int index) => const Divider(),
         itemBuilder: (BuildContext context, int index) {
-          return CastItemView(cast: cast[index]);
+          return CastFormItemView(cast: cast[index]);
         });
   }
 }
 
-class CastItemView extends StatelessWidget {
-  const CastItemView({Key? key, required this.cast}) : super(key: key);
+class CastFormItemView extends StatelessWidget {
+  const CastFormItemView({Key? key, required this.cast}) : super(key: key);
 
   final Cast cast;
 

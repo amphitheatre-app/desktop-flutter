@@ -19,6 +19,9 @@ import '../views/logs.dart';
 import '../views/resources.dart';
 import '../views/stats.dart';
 import '../views/settings.dart';
+import '../views/title_toggle_button.dart';
+
+import 'cast.dart';
 
 class PlayDetail extends StatefulWidget {
   const PlayDetail({Key? key}) : super(key: key);
@@ -42,6 +45,8 @@ class _PlayDetailState extends State<PlayDetail>
   late TabController tabController;
   late WhyFarther _selection;
 
+  final GlobalKey<ScaffoldState> _scaffoldStateKey = GlobalKey(); // Create a key
+
   @override
   void initState() {
     super.initState();
@@ -58,6 +63,7 @@ class _PlayDetailState extends State<PlayDetail>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldStateKey,
       appBar: buildAppBar(context),
       body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -77,16 +83,20 @@ class _PlayDetailState extends State<PlayDetail>
                   ]),
             )
           ]),
+          drawer: const PlayCastDrawer(),
     );
   }
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
       elevation: 0.0,
-      title: buildTitle(context),
+      title: TitleToggleButton(onPressed: () {
+         _scaffoldStateKey.currentState!.openDrawer();
+      }),
       centerTitle: false,
       actions: buildActions(),
       titleTextStyle: const TextStyle(fontWeight: FontWeight.bold),
+      automaticallyImplyLeading: false,
     );
   }
 
@@ -146,21 +156,6 @@ class _PlayDetailState extends State<PlayDetail>
           value: WhyFarther.tradingCharter,
           child: Text('Placed in charge of trading charter'),
         ),
-      ],
-    );
-  }
-
-  Column buildTitle(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text("Clean code linters"),
-        Text("Running",
-            style: Theme.of(context)
-                .textTheme
-                .overline!
-                .copyWith(color: Colors.green)),
       ],
     );
   }

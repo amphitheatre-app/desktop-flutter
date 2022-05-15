@@ -16,19 +16,20 @@ import 'package:flutter/material.dart';
 
 import '../views/list.dart';
 
-class PlaysSidebar extends StatelessWidget {
-  const PlaysSidebar({Key? key}) : super(key: key);
+class PlayListSidebar extends StatelessWidget {
+  const PlayListSidebar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(),
-      body: PlaysListView(),
+      body: PlayListView(),
     );
   }
 
   AppBar buildAppBar() {
     return AppBar(
+      automaticallyImplyLeading: false,
       title: const Text("Plays"),
       centerTitle: false,
       elevation: 0.6,

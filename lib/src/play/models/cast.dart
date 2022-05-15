@@ -18,4 +18,5 @@ class Cast {
   final int id;
   final String title;
   final String description;
+  final String status = 'RUNNING';
 }

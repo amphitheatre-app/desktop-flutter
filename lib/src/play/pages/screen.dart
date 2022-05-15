@@ -14,9 +14,9 @@
 
 import 'package:flutter/material.dart';
 
-//import 'detail.dart';
-import 'sidebar.dart';
-import 'overview.dart';
+import 'detail.dart';
+import 'list.dart';
+//import 'overview.dart';
 
 class PlaysScreen extends StatefulWidget {
   const PlaysScreen({Key? key}) : super(key: key);
@@ -33,12 +33,12 @@ class _PlaysScreenState extends State<PlaysScreen> {
     return Expanded(
       child: Row(
         children: <Widget>[
-          const SizedBox(child: PlaysSidebar(), width: 280),
+          const SizedBox(child: PlayListSidebar(), width: 280),
           const VerticalDivider(width: 1),
           Expanded(
             child: PageView.builder(
               controller: pageController,
-              //physics: const NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: pageItemBuilder)
             )
         ],
@@ -47,7 +47,7 @@ class _PlaysScreenState extends State<PlaysScreen> {
   }
 
   Widget pageItemBuilder(BuildContext context, int index) {
-    return const PlaysOverview();
-    //return const PlayDetail();
+    //return const PlaysOverview();
+    return const PlayDetail();
   }
 }
