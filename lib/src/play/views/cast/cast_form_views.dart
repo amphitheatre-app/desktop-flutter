@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import 'package:colorize_text_avatar/colorize_text_avatar.dart';
@@ -62,11 +63,15 @@ class _CastFormItemsViewState extends State<CastFormItemsView> {
   Widget build(BuildContext context) {
     return ListView.separated(
         itemCount: cast.length,
-        scrollDirection: Axis.vertical,
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 8),
-        separatorBuilder: (BuildContext context, int index) => const Divider(),
+        padding: const EdgeInsets.all(8),
+        separatorBuilder: (BuildContext context, int index) => const Divider(height: 1),
         itemBuilder: (BuildContext context, int index) {
-          return CastFormItemView(cast: cast[index]);
+          return InkWell(
+            child: CastFormItemView(cast: cast[index]),
+            onTap: () {
+              context.router.pushNamed('/plays/1/1');
+            },
+          );
         });
   }
 }
@@ -78,53 +83,59 @@ class CastFormItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: TextAvatar(
-          shape: Shape.Circular,
-          size: 48,
-          numberLetters: 2,
-          upperCase: true,
-          text: cast.title,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextAvatar(
+              shape: Shape.Circular,
+              size: 48,
+              numberLetters: 2,
+              upperCase: true,
+              text: cast.title,
+            ),
         ),
-      ),
-      Expanded(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 200),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Text(cast.title,
-                    style: Theme.of(context).textTheme.titleLarge),
-              ),
-              Text(cast.description,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Colors.grey))
-            ],
+        Expanded(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 200),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Text(cast.title,
+                      style: Theme.of(context).textTheme.titleLarge),
+                ),
+                Text(cast.description,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(color: Colors.grey))
+              ],
+            ),
           ),
         ),
-      ),
-      Expanded(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: OutlinedButton(
-                  onPressed: () => {}, child: const Text("Versions")),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text("03687956d", style: TextStyle(color: Colors.grey)),
-            )
-          ],
-        ),
-      )
-    ]);
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: OutlinedButton(
+                    onPressed: () => {}, child: const Text("Versions")),
+              ),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text("03687956d", style: TextStyle(color: Colors.grey)),
+              )
+            ],
+          ),
+        )
+      ]),
+    );
+  }
+
+  void handleOnTag(BuildContext context) {
+    context.router.pushNamed('/plays/1/1');
   }
 }

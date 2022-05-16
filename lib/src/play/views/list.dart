@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import 'package:colorize_text_avatar/colorize_text_avatar.dart';
@@ -59,7 +60,8 @@ class PlayListView extends StatelessWidget {
         scrollDirection: Axis.vertical,
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         itemCount: plays.length,
-        separatorBuilder: (BuildContext context, int index) => const Divider(height: 1),
+        separatorBuilder: (BuildContext context, int index) =>
+            const Divider(height: 1),
         itemBuilder: (BuildContext context, int index) {
           return ListItemView(play: plays[index]);
         });
@@ -74,8 +76,8 @@ class ListItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: const EdgeInsets.all(8.0),
-      leading: TextAvatar(
+        contentPadding: const EdgeInsets.all(8.0),
+        leading: TextAvatar(
           shape: Shape.Circular,
           size: 32,
           numberLetters: 2,
@@ -83,10 +85,11 @@ class ListItemView extends StatelessWidget {
           text: play.title,
           backgroundColor: Colors.blueGrey,
         ),
-      title: Text(play.title),
-      subtitle:
-          Text(play.description, maxLines: 3, overflow: TextOverflow.ellipsis),
-      onTap: () {},
-    );
+        title: Text(play.title),
+        subtitle: Text(play.description,
+            maxLines: 3, overflow: TextOverflow.ellipsis),
+        onTap: () {
+          context.router.pushNamed('/plays/1');
+        });
   }
 }

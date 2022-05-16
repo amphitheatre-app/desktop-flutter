@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:amphitheatre_desktop/src/router.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import 'detail.dart';
@@ -30,24 +32,18 @@ class _PlaysScreenState extends State<PlaysScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Row(
-        children: <Widget>[
-          SizedBox(child: PlayListSidebar(), width: 280),
-          const VerticalDivider(width: 1),
-          Expanded(
-            child: PageView.builder(
-              controller: pageController,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: pageItemBuilder)
-            )
-        ],
-      ),
-    );
-  }
-
-  Widget pageItemBuilder(BuildContext context, int index) {
-    //return const PlaysOverview();
-    return const PlayDetail();
+    return AutoTabsRouter(
+        routes: const [PlaysOverviewRoute(), PlayDetailRoute()],
+        builder: (context, child, animation) {
+          return Expanded(
+            child: Row(
+              children: <Widget>[
+                SizedBox(child: PlayListSidebar(), width: 280),
+                const VerticalDivider(width: 1),
+                Expanded(child: child)
+              ],
+            ),
+          );
+        });
   }
 }

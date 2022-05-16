@@ -14,6 +14,7 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:colorize_text_avatar/colorize_text_avatar.dart';
 
 import '../../models/cast.dart';
@@ -94,7 +95,9 @@ class CastListItemView extends StatelessWidget {
               .textTheme
               .overline!
               .copyWith(color: Colors.green)),
-      onTap: () {},
+      onTap: () {
+        context.router.pushNamed('/plays/1/1');
+      },
     );
   }
 }

@@ -12,27 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'app/pages/screen.dart';
-import 'play/pages/screen.dart';
+//import 'play/pages/screen.dart';
 
 // import 'sample_feature/sample_item_details_view.dart';
 // import 'sample_feature/sample_item_list_view.dart';
+import 'router.dart';
 import 'settings/settings_controller.dart';
 // import 'settings/settings_view.dart';
 
 /// The Widget that configures your application.
 class MyApp extends StatelessWidget {
-  const MyApp({
+  MyApp({
     Key? key,
     required this.settingsController,
   }) : super(key: key);
 
   final SettingsController settingsController;
+  final _appRouter = AppRouter();
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +46,7 @@ class MyApp extends StatelessWidget {
     return AnimatedBuilder(
       animation: settingsController,
       builder: (BuildContext context, Widget? child) {
-        return MaterialApp(
+        return MaterialApp.router(
             // Providing a restorationScopeId allows the Navigator built by the
             // MaterialApp to restore the navigation stack when a user leaves and
             // returns to the app after it has been killed while running in the
@@ -77,123 +80,105 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(),
             darkTheme: ThemeData.dark(),
             themeMode: settingsController.themeMode,
-            home: const MyStatefulWidget(),
-
-            // Define a function to handle named routes in order to support
-            // Flutter web url navigation and deep linking.
-            // onGenerateRoute: (RouteSettings routeSettings) {
-            //   return MaterialPageRoute<void>(
-            //     settings: routeSettings,
-            //     builder: (BuildContext context) {
-            //       switch (routeSettings.name) {
-            //         case SettingsView.routeName:
-            //           return SettingsView(controller: settingsController);
-            //         case SampleItemDetailsView.routeName:
-            //           return const SampleItemDetailsView();
-            //         case SampleItemListView.routeName:
-            //         default:
-            //           return const SampleItemListView();
-            //       }
-            //     },
-            //   );
-            // },
+            routerDelegate: _appRouter.delegate(),
+            routeInformationParser: _appRouter.defaultRouteParser(),
             debugShowCheckedModeBanner: false);
       },
     );
   }
 }
 
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key}) : super(key: key);
+// class AppScreen extends StatefulWidget {
+//   const AppScreen({Key? key}) : super(key: key);
 
-  @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
-}
+//   @override
+//   State<AppScreen> createState() => _AppScreenState();
+// }
 
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  static List<Widget> pages = <Widget>[
-    const PlaysScreen(),
-    const AppsScreen(),
-    Container(color: Colors.indigo),
-  ];
+// class _AppScreenState extends State<AppScreen> {
+//   PageController pageController = PageController();
+//   int _selectedIndex = 0;
 
-  PageController pageController = PageController();
-  int _selectedIndex = 0;
+//   @override
+//   Widget build(BuildContext context) {
+//     final ThemeData theme = Theme.of(context);
+//     final NavigationRailThemeData navigationRailTheme =
+//         NavigationRailTheme.of(context);
+//     final Color backgroundColor =
+//         navigationRailTheme.backgroundColor ?? theme.colorScheme.surface;
 
-  @override
-  Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    final NavigationRailThemeData navigationRailTheme =
-        NavigationRailTheme.of(context);
-    final Color backgroundColor =
-        navigationRailTheme.backgroundColor ?? theme.colorScheme.surface;
-
-    return Scaffold(
-      body: Row(
-        children: <Widget>[
-          // Container(
-          //   color: backgroundColor,
-          //   child: Column(
-          //     children: [
-          //       Expanded(
-          //         child: NavigationRail(
-          //           groupAlignment: -1.0,
-          //           selectedIndex: _selectedIndex,
-          //           onDestinationSelected: (int index) {
-          //             setState(() {
-          //               _selectedIndex = index;
-          //               pageController.jumpToPage(index);
-          //             });
-          //           },
-          //           labelType: NavigationRailLabelType.all,
-          //           leading: CircleAvatar(
-          //             backgroundColor: Colors.blueGrey,
-          //             radius: 20,
-          //             child: IconButton(
-          //               padding: EdgeInsets.zero,
-          //               icon: const Icon(Icons.account_circle),
-          //               color: Colors.white,
-          //               onPressed: () {},
-          //             ),
-          //           ),
-          //           destinations: const <NavigationRailDestination>[
-          //             NavigationRailDestination(
-          //               icon: Icon(Icons.rocket_launch),
-          //               selectedIcon: Icon(Icons.rocket_launch),
-          //               label: Text('Plays'),
-          //             ),
-          //             NavigationRailDestination(
-          //               icon: Icon(Icons.apps_outlined),
-          //               selectedIcon: Icon(Icons.apps),
-          //               label: Text('Apps'),
-          //             ),
-          //             NavigationRailDestination(
-          //               icon: Icon(Icons.extension_sharp),
-          //               selectedIcon: Icon(Icons.extension),
-          //               label: Text('Addons'),
-          //             ),
-          //           ],
-          //         ),
-          //       ),
-          //       IconButton(
-          //         onPressed: () {},
-          //         icon: const Icon(Icons.help_outline_rounded, color: Colors.grey),
-          //         padding: const EdgeInsets.only(bottom: 20),
-          //       )
-          //     ],
-          //   ),
-          // ),
-          // const VerticalDivider(thickness: 1, width: 1),
-          // // This is the main content.
-          Expanded(
-            child: PageView(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: pageController,
-              children: pages,
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
+//     return AutoTabsRouter(
+//         routes: const [PlaysScreenRoute(), AppsScreenRoute()],
+//         builder: (context, child, animation) {
+//           final tabsRouter = AutoTabsRouter.of(context);
+//           return Scaffold(
+//             body: Row(
+//               children: <Widget>[
+//                 Container(
+//                   color: backgroundColor,
+//                   child: Column(
+//                     children: [
+//                       Expanded(
+//                         child: NavigationRail(
+//                           groupAlignment: -1.0,
+//                           selectedIndex: tabsRouter.activeIndex,
+//                           onDestinationSelected: (int index) {
+//                             setState(() {
+//                               tabsRouter.setActiveIndex(index);
+//                             });
+//                           },
+//                           labelType: NavigationRailLabelType.all,
+//                           leading: CircleAvatar(
+//                             backgroundColor: Colors.blueGrey,
+//                             radius: 20,
+//                             child: IconButton(
+//                               padding: EdgeInsets.zero,
+//                               icon: const Icon(Icons.account_circle),
+//                               color: Colors.white,
+//                               onPressed: () {},
+//                             ),
+//                           ),
+//                           destinations: const <NavigationRailDestination>[
+//                             NavigationRailDestination(
+//                               icon: Icon(Icons.rocket_launch),
+//                               selectedIcon: Icon(Icons.rocket_launch),
+//                               label: Text('Plays'),
+//                             ),
+//                             NavigationRailDestination(
+//                               icon: Icon(Icons.apps_outlined),
+//                               selectedIcon: Icon(Icons.apps),
+//                               label: Text('Apps'),
+//                             ),
+//                             NavigationRailDestination(
+//                               icon: Icon(Icons.extension_sharp),
+//                               selectedIcon: Icon(Icons.extension),
+//                               label: Text('Addons'),
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                       IconButton(
+//                         onPressed: () {},
+//                         icon: const Icon(Icons.help_outline_rounded,
+//                             color: Colors.grey),
+//                         padding: const EdgeInsets.only(bottom: 20),
+//                       )
+//                     ],
+//                   ),
+//                 ),
+//                 const VerticalDivider(thickness: 1, width: 1),
+//                 // This is the main content.
+//                 // Expanded(
+//                 //   child: PageView(
+//                 //     physics: const NeverScrollableScrollPhysics(),
+//                 //     controller: pageController,
+//                 //     children: pages,
+//                 //   ),
+//                 // )
+//                 Expanded(child: child)
+//               ],
+//             ),
+//           );
+//         });
+//   }
+// }

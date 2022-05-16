@@ -35,6 +35,7 @@ class PlaysOverview extends StatelessWidget {
       centerTitle: false,
       actions: buildActions(),
       titleTextStyle: const TextStyle(fontWeight: FontWeight.bold),
+      automaticallyImplyLeading: false,
     );
   }
 
