@@ -39,7 +39,7 @@ class PlayListSidebar extends StatelessWidget {
       automaticallyImplyLeading: false,
       title: const Text("Amphitheatre"),
       centerTitle: false,
-      elevation: 0.6,
+      elevation: 0.0,
       //shadowColor: Colors.black,
       actions: buildActions(context),
       titleTextStyle: const TextStyle(fontWeight: FontWeight.bold),
@@ -158,7 +158,7 @@ class PlayListSidebar extends StatelessWidget {
               "An environment is a set of variables that allows you to switch the context of your requests.",
           titleTextStyle: const TextStyle(
             fontSize: 14,
-            color: Colors.white70,
+            color: Colors.white,
             fontWeight: FontWeight.w500,
           ),
           subtitleTextStyle: const TextStyle(

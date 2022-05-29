@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LogsView extends StatefulWidget {
   const LogsView({Key? key}) : super(key: key);
@@ -21,20 +22,48 @@ class LogsView extends StatefulWidget {
   State<StatefulWidget> createState() => _LogsViewState();
 }
 
+final List<String> logs = <String>[
+  "[2022-05-12 06:05:38.283] [info] { level: 'info', from: 'AssetCache', type: 'checkingForAppUpdate' }",
+  "[2022-05-12 06:05:39.162] [info] Websocket listening on 64655...",
+  "[2022-05-12 06:05:39.169] [info] Set up server listeners with auth (5ef784b2a1c5c1d4eb37e5ca1a4bf77df78b56bc)...",
+  "[2022-05-13 05:24:48.874] [info] Responding to SIGTERM and shutting down...",
+  "[2022-05-27 21:53:31.400] [info] { level: 'info', from: 'AssetCache', type: 'checkingForAppUpdate' }",
+  "[2022-05-27 21:53:32.062] [info] Websocket listening on 58745...",
+  "[2022-05-27 21:53:32.064] [info] Set up server listeners with auth (da0f93b71527e09b129a5afda2f2abc063674913)...",
+  "[2022-05-27 23:47:03.698] [info] Responding to SIGTERM and shutting down...",
+  "[2022-05-12 06:05:38.283] [info] { level: 'info', from: 'AssetCache', type: 'checkingForAppUpdate' }",
+  "[2022-05-12 06:05:39.162] [info] Websocket listening on 64655...",
+  "[2022-05-12 06:05:39.169] [info] Set up server listeners with auth (5ef784b2a1c5c1d4eb37e5ca1a4bf77df78b56bc)...",
+  "[2022-05-13 05:24:48.874] [info] Responding to SIGTERM and shutting down...",
+  "[2022-05-27 21:53:31.400] [info] { level: 'info', from: 'AssetCache', type: 'checkingForAppUpdate' }",
+  "[2022-05-27 21:53:32.062] [info] Websocket listening on 58745...",
+  "[2022-05-27 21:53:32.064] [info] Set up server listeners with auth (da0f93b71527e09b129a5afda2f2abc063674913)...",
+  "[2022-05-27 23:47:03.698] [info] Responding to SIGTERM and shutting down...",
+  "[2022-05-12 06:05:38.283] [info] { level: 'info', from: 'AssetCache', type: 'checkingForAppUpdate' }",
+  "[2022-05-12 06:05:39.162] [info] Websocket listening on 64655...",
+  "[2022-05-12 06:05:39.169] [info] Set up server listeners with auth (5ef784b2a1c5c1d4eb37e5ca1a4bf77df78b56bc)...",
+  "[2022-05-13 05:24:48.874] [info] Responding to SIGTERM and shutting down...",
+  "[2022-05-27 21:53:31.400] [info] { level: 'info', from: 'AssetCache', type: 'checkingForAppUpdate' }",
+  "[2022-05-27 21:53:32.062] [info] Websocket listening on 58745...",
+  "[2022-05-27 21:53:32.064] [info] Set up server listeners with auth (da0f93b71527e09b129a5afda2f2abc063674913)...",
+  "[2022-05-27 23:47:03.698] [info] Responding to SIGTERM and shutting down...",
+];
+
 class _LogsViewState extends State<LogsView> {
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.black54,
       padding: const EdgeInsets.all(8.0),
-      child: ListView.builder(itemCount: 100, itemBuilder: itemBuilder),
+      child: ListView(children: logs.map(((e) => text(e))).toList()),
     );
   }
 
-  Widget itemBuilder(BuildContext context, int index) {
-    return const Text(
-      "2022-05-11 14:37:31 21526 [Warning] Access denied for user 'root'@'127.0.0.1' (using password: NO)",
-      style: TextStyle(color: Colors.white70, fontSize: 13, height: 1.4),
+  Widget text(String text) {
+    return Text(
+      text,
+      style: GoogleFonts.courierPrime(
+          color: Colors.white70, fontSize: 13, height: 1.4),
       softWrap: true,
     );
   }
