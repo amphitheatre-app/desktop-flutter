@@ -14,16 +14,23 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:empty_widget/empty_widget.dart';
+
 import '../views/list.dart';
+import '../models/play.dart';
 
 class PlayListSidebar extends StatelessWidget {
   PlayListSidebar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var data = <Play>[];
+
     return Scaffold(
       appBar: buildAppBar(context),
-      body: PlayListView(),
+      body: data.isNotEmpty
+          ? PlayListView(plays: data)
+          : buildEmptyWidget(context),
     );
   }
 
@@ -54,28 +61,29 @@ class PlayListSidebar extends StatelessWidget {
         icon: const Icon(Icons.add_circle_outlined),
         tooltip: "New",
         onPressed: () {
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return Modal(
-                    title: "New play",
-                    body: buildForm(),
-                    actions: <Widget>[
-                      ElevatedButton(
-                        onPressed: () {
-                          // Validate will return true if the form is valid, or false if
-                          // the form is invalid.
-                          if (_formKey.currentState!.validate()) {
-                            // Process data.
-                          }
-                        },
-                        child: const Text('Submit'),
-                      )
-                    ]);
-              });
+          showCreateDialog(context);
         },
       ),
     ];
+  }
+
+  Future<dynamic> showCreateDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Modal(title: "New play", body: buildForm(), actions: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                // Validate will return true if the form is valid, or false if
+                // the form is invalid.
+                if (_formKey.currentState!.validate()) {
+                  // Process data.
+                }
+              },
+              child: const Text('Submit'),
+            )
+          ]);
+        });
   }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -124,8 +132,7 @@ class PlayListSidebar extends StatelessWidget {
           ),
           TextFormField(
             decoration: const InputDecoration(
-                hintText:
-                    'An SSH URL, like git@github.com:user/repo.git',
+                hintText: 'An SSH URL, like git@github.com:user/repo.git',
                 border: OutlineInputBorder(),
                 contentPadding: EdgeInsets.all(8)),
             validator: (String? value) {
@@ -137,6 +144,35 @@ class PlayListSidebar extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+
+  Widget buildEmptyWidget(BuildContext context) {
+    return Column(
+      children: [
+        EmptyWidget(
+          image: null,
+          packageImage: PackageImage.Image_1,
+          title: "You don't have any environments",
+          subTitle:
+              "An environment is a set of variables that allows you to switch the context of your requests.",
+          titleTextStyle: const TextStyle(
+            fontSize: 14,
+            color: Colors.white70,
+            fontWeight: FontWeight.w500,
+          ),
+          subtitleTextStyle: const TextStyle(
+            fontSize: 12,
+            color: Colors.white54,
+          ),
+          hideBackgroundAnimation: true,
+        ),
+        TextButton(
+            onPressed: () {
+              showCreateDialog(context);
+            },
+            child: const Text("Create Environment"))
+      ],
     );
   }
 }
