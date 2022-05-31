@@ -1,4 +1,4 @@
-name: amphitheatre_desktop
+name: amphitheatre
 description: A new Flutter project.
 
 # Prevent accidental publishing to pub.dev.

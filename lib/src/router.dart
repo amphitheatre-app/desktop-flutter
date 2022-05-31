@@ -28,7 +28,7 @@ part 'router.gr.dart';
       RedirectRoute(path: '/', redirectTo: '/plays'), 
       AutoRoute(path: '/plays', page: PlaysScreen, children: [
         AutoRoute(path: ':id', page: PlaysOverview),
-        AutoRoute(path: ':id/:pid', page: PlayDetail)
+        AutoRoute(path: ':id/:pid', page: PlayDetailPage)
       ]),
     ])
 class AppRouter extends _$AppRouter {}

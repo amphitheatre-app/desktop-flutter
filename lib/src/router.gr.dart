@@ -27,7 +27,7 @@ class _$AppRouter extends RootStackRouter {
     },
     PlayDetailRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: const PlayDetail());
+          routeData: routeData, child: const PlayDetailPage());
     }
   };
 
@@ -62,7 +62,7 @@ class PlaysOverviewRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [PlayDetail]
+/// [PlayDetailPage]
 class PlayDetailRoute extends PageRouteInfo<void> {
   const PlayDetailRoute() : super(PlayDetailRoute.name, path: ':id/:pid');
 
