@@ -14,22 +14,13 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:auto_route/auto_route.dart';
+import '../abstract_command.dart';
+import 'package:amphitheatre/src/entities/play/play.dart';
 
-import 'features/play/plays_page.dart';
-import 'features/play/detail/play_overview_page.dart';
-import 'features/play/detail/play_detail_page.dart';
-import 'entities/play/play.dart';
+class StopPlayCommand extends AbstractCommand {
+  StopPlayCommand(BuildContext c) : super(c);
 
-part 'router.gr.dart';
-
-@MaterialAutoRouter(
-    //replaceInRouteName: 'Page, Route',
-    routes: <AutoRoute>[
-      RedirectRoute(path: '/', redirectTo: '/plays'), 
-      AutoRoute(path: '/plays', page: PlaysPage, children: [
-        AutoRoute(path: ':id', page: PlayOverviewPage),
-        AutoRoute(path: ':id/:pid', page: PlayDetailPage)
-      ]),
-    ])
-class AppRouter extends _$AppRouter {}
+  Future<bool> execute(Play play) async {
+    return Future.value(true);
+  }
+}
