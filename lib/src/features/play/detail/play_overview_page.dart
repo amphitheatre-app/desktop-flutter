@@ -39,7 +39,7 @@ class _PlayOverviewPageState extends State<PlayOverviewPage> {
   @override
   void initState() {
     super.initState();
-    play = plays.first;
+    play = testPlaysData.first;
   }
 
   @override

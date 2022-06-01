@@ -35,7 +35,7 @@ class _PlayCastListViewState extends State<PlayCastListView> {
         separatorBuilder: (BuildContext context, int index) =>
             const Divider(height: 1),
         itemBuilder: (BuildContext context, int index) {
-          return PlayCastListItemView(cast: cast[index]);
+          return PlayCastListItemView(cast: testCastData[index]);
         });
   }
 }

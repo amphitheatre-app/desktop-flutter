@@ -68,7 +68,7 @@ class _PlayListSidebarView
 
   @override
   Widget build(BuildContext context) {
-    var data = <Play>[];
+    var data = testPlaysData;
 
     return Scaffold(
       appBar: buildAppBar(context),

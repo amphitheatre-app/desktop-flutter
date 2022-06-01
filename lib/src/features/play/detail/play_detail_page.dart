@@ -53,7 +53,7 @@ class _PlayDetailPageState extends State<PlayDetailPage>
     super.initState();
     tabController = TabController(
         vsync: this, length: tabs.length, animationDuration: Duration.zero);
-    play = plays.first;
+    play = testPlaysData.first;
   }
 
   @override

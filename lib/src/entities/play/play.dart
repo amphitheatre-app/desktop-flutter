@@ -20,12 +20,12 @@ class Play {
   final int id;
   final String title;
   final String description;
-  final List<Cast> _cast = [];
+  final List<Cast> _cast = testCastData;
 
   List<Cast> get cast => _cast;
 }
 
-final List<Play> plays = <Play>[
+final List<Play> testPlaysData = <Play>[
   Play(1, "Clean code linters",
       "Make sure your code matches your style guide with these essential code linters."),
   Play(2, "Open journalism",

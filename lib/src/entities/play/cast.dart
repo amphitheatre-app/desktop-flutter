@@ -21,7 +21,7 @@ class Cast {
   final String status = 'RUNNING';
 }
 
-final List<Cast> cast = <Cast>[
+final List<Cast> testCastData = <Cast>[
   const Cast(1, "Clean code linters",
       "Make sure your code matches your style guide with these essential code linters."),
   const Cast(2, "Open journalism",
