@@ -15,6 +15,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:amphitheatre/src/models/play_model.dart';
+import 'package:amphitheatre/src/services/play_service.dart';
+
 abstract class AbstractCommand {
   static BuildContext? _lastKnownRoot;
 
@@ -30,6 +33,14 @@ abstract class AbstractCommand {
   }
 
   T getProvided<T>() => Provider.of<T>(context, listen: false);
+
+  /// Convenience lookup methods for all commands to share
+  
+  /// Models
+  PlayModel get playModel => getProvided();
+
+  /// Services
+  PlayService get playService => getProvided();
 }
 
 /// MIX-INX

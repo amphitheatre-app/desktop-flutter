@@ -12,10 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:amphitheatre/src/commands/play/refresh_plays_command.dart';
+import 'package:amphitheatre/src/models/play_model.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:amphitheatre/src/commands/commands.dart';
 import 'package:amphitheatre/src/components/dialogs/modal.dart';
 import 'package:amphitheatre/src/components/widget_view.dart';
-import 'package:flutter/material.dart';
 
 import 'package:amphitheatre/src/entities/play/play.dart';
 import 'package:empty_widget/empty_widget.dart';
@@ -32,6 +36,12 @@ class PlayListSidebar extends StatefulWidget {
 }
 
 class _PlayListSidebarState extends State<PlayListSidebar> {
+  @override
+  void initState() {
+    RefreshPlaysCommand(context).execute();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) => _PlayListSidebarView(this);
 
@@ -68,12 +78,13 @@ class _PlayListSidebarView
 
   @override
   Widget build(BuildContext context) {
-    var data = testPlaysData;
+    var entries =
+        context.select<PlayModel, List<Play>>((value) => value.entries);
 
     return Scaffold(
       appBar: buildAppBar(context),
-      body: data.isNotEmpty
-          ? PlayListView(plays: data)
+      body: entries.isNotEmpty
+          ? PlayListView(plays: entries)
           : buildEmptyWidget(context),
     );
   }

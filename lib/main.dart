@@ -12,12 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:amphitheatre/src/models/play_model.dart';
+import 'package:amphitheatre/src/services/play_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'src/app.dart';
 import 'src/features/settings/settings_controller.dart';
 import 'src/features/settings/settings_service.dart';
-
 
 void main() async {
   // Set up the SettingsController, which will glue user settings to multiple
@@ -31,5 +33,20 @@ void main() async {
   // Run the app and pass in the SettingsController. The app listens to the
   // SettingsController for changes, then passes it further down to the
   // SettingsView.
-  runApp(App(settingsController: settingsController));
+  runApp(
+    MultiProvider(
+      providers: [
+        /// MODELS
+        ChangeNotifierProvider.value(value: PlayModel()),
+
+        /// SERVICES
+        Provider(create: (_) => PlayService()),
+
+        /// ROOT CONTEXT, Allows Commands to retrieve a 'safe' context that is not
+        /// tied to any one view. Allows them to work on async tasks without issues.
+        Provider<BuildContext>(create: (c) => c),
+      ],
+      child: App(settingsController: settingsController),
+    ),
+  );
 }
