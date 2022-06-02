@@ -12,16 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:amphitheatre/src/models/play_model.dart';
-import 'package:amphitheatre/src/services/play_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:window_manager/window_manager.dart';
 
 import 'src/app.dart';
 import 'src/features/settings/settings_controller.dart';
 import 'src/features/settings/settings_service.dart';
+import 'src/models/play_model.dart';
+import 'src/services/play_service.dart';
 
 void main() async {
+  // Set up the window options.
+  WidgetsFlutterBinding.ensureInitialized();
+  await windowManager.ensureInitialized();
+  windowManager.waitUntilReadyToShow(
+    const WindowOptions(size: Size(1100, 700), center: true),
+    () async {
+      await windowManager.show();
+      await windowManager.focus();
+    },
+  );
+
   // Set up the SettingsController, which will glue user settings to multiple
   // Flutter Widgets.
   final settingsController = SettingsController(SettingsService());
