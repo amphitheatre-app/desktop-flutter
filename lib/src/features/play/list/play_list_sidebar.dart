@@ -12,15 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:amphitheatre/src/commands/play/refresh_plays_command.dart';
-import 'package:amphitheatre/src/models/play_model.dart';
+import 'package:amphitheatre/src/entities/play/player.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:auto_route/auto_route.dart';
 
 import 'package:amphitheatre/src/commands/commands.dart';
 import 'package:amphitheatre/src/components/dialogs/modal.dart';
 import 'package:amphitheatre/src/components/widget_view.dart';
 
+import 'package:amphitheatre/src/models/play_model.dart';
 import 'package:amphitheatre/src/entities/play/play.dart';
 import 'package:empty_widget/empty_widget.dart';
 import '../compose/play_submit_form_view.dart';
@@ -38,13 +39,9 @@ class PlayListSidebar extends StatefulWidget {
 /// Handles all button handlers and business logic functions for the _PlayListSidebarView
 /// Also contains any local view state.
 class PlayListSidebarState extends State<PlayListSidebar> {
-  late PlayModel playModel;
-
   @override
   void initState() {
     super.initState();
-
-    playModel = context.read();
     RefreshPlaysCommand(context).execute();
   }
 
@@ -79,7 +76,8 @@ class PlayListSidebarState extends State<PlayListSidebar> {
   }
 
   void trySetSelectedPlay(Play play) {
-    playModel.selectedPlay = play;
+    context.read<PlayModel>().selectedPlay = play;
+    context.router.pushNamed('/plays/overview');
   }
 }
 

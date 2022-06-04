@@ -12,26 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:amphitheatre/src/entities/play/cast.dart';
+import 'package:amphitheatre/src/models/play_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:amphitheatre/src/components/title_toggle_button.dart';
+import 'package:amphitheatre/src/entities/play/player.dart';
 
 import 'play_cast_view.dart';
 
 class PlayCastDrawer extends StatelessWidget {
-  final List<Cast> cast;
+  final List<Player> cast;
 
   const PlayCastDrawer({Key? key, required this.cast}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var player =
+        context.select<PlayModel, Player?>((value) => value.selectedPlayer);
     return Drawer(
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: TitleToggleButton(
-              title: "Clean the linters",
-              subtitle: "RUNNING",
+              title: player!.title,
+              subtitle: player.status,
               onPressed: () {
                 Navigator.pop(context);
               }),

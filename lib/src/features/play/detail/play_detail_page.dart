@@ -12,9 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:auto_route/auto_route.dart';
+import 'package:amphitheatre/src/models/play_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:auto_route/auto_route.dart';
 
+import 'package:amphitheatre/src/entities/play/player.dart';
 import 'package:amphitheatre/src/entities/play/play.dart';
 import 'package:amphitheatre/src/commands/commands.dart';
 import 'package:amphitheatre/src/components/title_toggle_button.dart';
@@ -30,14 +33,17 @@ class PlayDetailPage extends StatefulWidget {
   const PlayDetailPage({Key? key}) : super(key: key);
 
   @override
-  State<PlayDetailPage> createState() => _PlayDetailPageState();
+  State<PlayDetailPage> createState() => PlayDetailPageState();
 }
 
-class _PlayDetailPageState extends State<PlayDetailPage>
+class PlayDetailPageState extends State<PlayDetailPage>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
   late WhyFarther _selection;
-  late Play play; // Create a key
+
+  late PlayModel playModel;
+  late Play? play;
+  late Player? player;
 
   List<Tab> tabs = const <Tab>[
     Tab(text: 'Logs'),
@@ -47,10 +53,14 @@ class _PlayDetailPageState extends State<PlayDetailPage>
 
   @override
   void initState() {
-    super.initState();
     tabController = TabController(
         vsync: this, length: tabs.length, animationDuration: Duration.zero);
-    play = testPlaysData.first;
+
+    playModel = context.read();
+    play = playModel.selectedPlay;
+    player = playModel.selectedPlayer;
+
+    super.initState();
   }
 
   @override
@@ -59,29 +69,31 @@ class _PlayDetailPageState extends State<PlayDetailPage>
     super.dispose();
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Provider.value(value: this, child: _PlayDetailPageView(this));
+  }
+
   void openMenu() => PlayDetailPage.scaffoldStateKey.currentState?.openDrawer();
 
-  @override
-  Widget build(BuildContext context) => _PlayDetailPageView(this);
-
   void handleTerminalPressed() async {
-    await OpenTerminalCommand(context).execute(play);
+    await OpenTerminalCommand(context).execute(play!);
   }
 
   void handlePlayPressed() async {
-    await PlayPlayCommand(context).execute(play);
+    await PlayPlayCommand(context).execute(play!);
   }
 
   void handleStopPressed() async {
-    await StopPlayCommand(context).execute(play);
+    await StopPlayCommand(context).execute(play!);
   }
 
   void handleRefreshPressed() async {
-    await RefreshPlayCommand(context).execute(play);
+    await RefreshPlayCommand(context).execute(play!);
   }
 
   void handleCancelPressed() async {
-    await CancelPlayCommand(context).execute(play);
+    await CancelPlayCommand(context).execute(play!);
   }
 
   void onWhyFartherSelected(WhyFarther result) {
@@ -89,13 +101,18 @@ class _PlayDetailPageState extends State<PlayDetailPage>
       _selection = result;
     });
   }
+
+  void trySetSelectedPlayer(Player player) {
+    playModel.selectedPlayer = player;
+    context.router.pushNamed('/plays/detail');
+  }
 }
 
 enum WhyFarther { harder, smarter, selfStarter, tradingCharter }
 
 class _PlayDetailPageView
-    extends WidgetView<PlayDetailPage, _PlayDetailPageState> {
-  const _PlayDetailPageView(_PlayDetailPageState state) : super(state);
+    extends WidgetView<PlayDetailPage, PlayDetailPageState> {
+  const _PlayDetailPageView(PlayDetailPageState state) : super(state);
 
   @override
   Widget build(BuildContext context) {
@@ -121,16 +138,18 @@ class _PlayDetailPageView
                   ]),
             )
           ]),
-      drawer: PlayCastDrawer(cast: state.play.cast),
+      drawer: PlayCastDrawer(cast: state.play!.cast),
     );
   }
 
   AppBar buildAppBar(BuildContext context) {
+    var player =
+        context.select<PlayModel, Player?>((value) => value.selectedPlayer);
     return AppBar(
       elevation: 0.0,
       title: TitleToggleButton(
-          title: "Clean the linters",
-          subtitle: "RUNNING",
+          title: player!.title,
+          subtitle: player.status,
           onPressed: state.openMenu),
       centerTitle: false,
       actions: buildActions(),

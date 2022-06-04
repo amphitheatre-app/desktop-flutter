@@ -32,17 +32,20 @@ class PlayOverviewPage extends StatefulWidget {
 }
 
 class _PlayOverviewPageState extends State<PlayOverviewPage> {
-  late WhyFarther _selection; // Create a key
+  late WhyFarther _selection;
+  
+  late PlayModel playModel;
   late Play? play;
 
   @override
   void initState() {
+    playModel = context.read();
+    play = playModel.selectedPlay;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    play = context.select<PlayModel, Play?>((value) => value.selectedPlay);
     return play != null
         ? _PlayOverviewPageView(this)
         : const Scaffold(

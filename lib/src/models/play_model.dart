@@ -1,4 +1,3 @@
-// Copyright 2022 The Amphitheatre Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,6 +14,7 @@
 import 'abstract_model.dart';
 import 'package:collection/collection.dart';
 import 'package:amphitheatre/src/entities/play/play.dart';
+import 'package:amphitheatre/src/entities/play/player.dart';
 
 class PlayModel extends AbstractModel {
   List<Play> get entries => List.unmodifiable(_entries);
@@ -33,8 +33,16 @@ class PlayModel extends AbstractModel {
 
   Play? _selectedPlay;
 
+  Player? get selectedPlayer => _selectedPlayer;
+  set selectedPlayer(Player? player) {
+    _selectedPlayer = player;
+    notifyListeners();
+  }
+
+  Player? _selectedPlayer;
+
   Play? get(int id) => _entries.firstWhereOrNull((p) => p.id == id);
-  
+
   bool exists(Play value) => _entries.any((x) => x.id == value.id);
 
   void add(Play value) {

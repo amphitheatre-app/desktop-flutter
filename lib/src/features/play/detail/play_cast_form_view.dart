@@ -12,15 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:amphitheatre/src/models/play_model.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:amphitheatre/src/entities/play/cast.dart';
+
+import 'package:amphitheatre/src/entities/play/player.dart';
 
 import 'play_cast_form_item_view.dart';
 
 class PlayCastFormView extends StatefulWidget {
-  final List<Cast> cast;
+  final List<Player> cast;
   const PlayCastFormView({Key? key, required this.cast}) : super(key: key);
 
   @override
@@ -28,8 +30,9 @@ class PlayCastFormView extends StatefulWidget {
 }
 
 class _PlayCastFormViewState extends State<PlayCastFormView> {
-  void onItemTaped(BuildContext context, Cast cast) {
-    context.router.pushNamed('/plays/1/1');
+  void handleItemTaped(BuildContext context, Player player) {
+    context.read<PlayModel>().selectedPlayer = player;
+    context.router.pushNamed('/plays/detail');
   }
 
   @override
@@ -40,10 +43,10 @@ class _PlayCastFormViewState extends State<PlayCastFormView> {
         separatorBuilder: (BuildContext context, int index) =>
             const Divider(height: 1),
         itemBuilder: (BuildContext context, int index) {
-          Cast cast = widget.cast[index];
+          Player player = widget.cast[index];
           return InkWell(
-            child: PlayCastFormItemView(cast: cast),
-            onTap: () => onItemTaped(context, cast),
+            child: PlayCastFormItemView(cast: player),
+            onTap: () => handleItemTaped(context, player),
           );
         });
   }

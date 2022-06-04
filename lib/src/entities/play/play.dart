@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'cast.dart';
+import 'player.dart';
 
 class Play {
   Play(this.id, this.title, this.description);
@@ -20,9 +20,9 @@ class Play {
   final int id;
   final String title;
   final String description;
-  final List<Cast> _cast = testCastData;
+  final List<Player> _cast = testCastData;
 
-  List<Cast> get cast => _cast;
+  List<Player> get cast => _cast;
 }
 
 final List<Play> testPlaysData = <Play>[

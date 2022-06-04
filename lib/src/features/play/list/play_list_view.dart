@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import 'package:flutter/material.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:provider/provider.dart';
 
 import 'package:colorize_text_avatar/colorize_text_avatar.dart';
@@ -61,12 +60,11 @@ class ListItemView extends StatelessWidget {
       title: Text(play.title),
       subtitle:
           Text(play.description, maxLines: 3, overflow: TextOverflow.ellipsis),
-      onTap: () => _handleListTaped(context),
+      onTap: () => _handleItemTaped(context),
     );
   }
 
-  void _handleListTaped(BuildContext context) {
+  void _handleItemTaped(BuildContext context) {
     context.read<PlayListSidebarState>().trySetSelectedPlay(play);
-    //context.router.pushNamed('/plays/overview');
   }
 }

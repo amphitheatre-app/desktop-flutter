@@ -14,12 +14,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:colorize_text_avatar/colorize_text_avatar.dart';
-import 'package:amphitheatre/src/entities/play/cast.dart';
+import 'package:amphitheatre/src/entities/play/player.dart';
 
 class PlayCastFormItemView extends StatelessWidget {
   const PlayCastFormItemView({Key? key, required this.cast}) : super(key: key);
 
-  final Cast cast;
+  final Player cast;
 
   @override
   Widget build(BuildContext context) {

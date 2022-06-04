@@ -12,14 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:amphitheatre/src/entities/play/cast.dart';
+import 'package:amphitheatre/src/models/play_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import 'package:auto_route/auto_route.dart';
 import 'package:colorize_text_avatar/colorize_text_avatar.dart';
+import 'package:amphitheatre/src/components/widget_view.dart';
+import 'package:amphitheatre/src/entities/play/player.dart';
+
+import 'play_detail_page.dart';
 
 class PlayCastListView extends StatefulWidget {
-  final List<Cast> cast;
+  final List<Player> cast;
   const PlayCastListView({Key? key, required this.cast}) : super(key: key);
 
   @override
@@ -27,6 +31,10 @@ class PlayCastListView extends StatefulWidget {
 }
 
 class _PlayCastListViewState extends State<PlayCastListView> {
+  void _handleItemTaped(BuildContext context, Player player) {
+    context.read<PlayDetailPageState>().trySetSelectedPlayer(player);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
@@ -35,15 +43,18 @@ class _PlayCastListViewState extends State<PlayCastListView> {
         separatorBuilder: (BuildContext context, int index) =>
             const Divider(height: 1),
         itemBuilder: (BuildContext context, int index) {
-          return PlayCastListItemView(cast: testCastData[index]);
+          return PlayCastListItemView(this, player: widget.cast[index]);
         });
   }
 }
 
-class PlayCastListItemView extends StatelessWidget {
-  const PlayCastListItemView({Key? key, required this.cast}) : super(key: key);
+class PlayCastListItemView
+    extends WidgetView<PlayCastListView, _PlayCastListViewState> {
+  // ignore: use_key_in_widget_constructors
+  const PlayCastListItemView(_PlayCastListViewState state, {required this.player})
+      : super(state);
 
-  final Cast cast;
+  final Player player;
 
   @override
   Widget build(BuildContext context) {
@@ -54,18 +65,16 @@ class PlayCastListItemView extends StatelessWidget {
         size: 32,
         numberLetters: 2,
         upperCase: true,
-        text: cast.title,
+        text: player.title,
         backgroundColor: Colors.blueGrey,
       ),
-      title: Text(cast.title),
-      trailing: Text(cast.status,
+      title: Text(player.title),
+      trailing: Text(player.status,
           style: Theme.of(context)
               .textTheme
               .overline!
               .copyWith(color: Colors.green)),
-      onTap: () {
-        context.router.pushNamed('/plays/1/1');
-      },
+      onTap: () => state._handleItemTaped(context, player),
     );
   }
 }
