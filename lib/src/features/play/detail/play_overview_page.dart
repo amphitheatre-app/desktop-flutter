@@ -12,21 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:amphitheatre/src/commands/commands.dart';
 import 'package:amphitheatre/src/components/widget_view.dart';
 import 'package:amphitheatre/src/entities/play/play.dart';
+import 'package:amphitheatre/src/models/play_model.dart';
 
 import 'play_cast_form_view.dart';
 
 enum WhyFarther { harder, smarter, selfStarter, tradingCharter }
 
 class PlayOverviewPage extends StatefulWidget {
-  final String? id;
-  const PlayOverviewPage({Key? key, @PathParam('id') this.id})
-      : super(key: key);
+  const PlayOverviewPage({Key? key}) : super(key: key);
 
   @override
   State<PlayOverviewPage> createState() => _PlayOverviewPageState();
@@ -34,31 +33,39 @@ class PlayOverviewPage extends StatefulWidget {
 
 class _PlayOverviewPageState extends State<PlayOverviewPage> {
   late WhyFarther _selection; // Create a key
-  late Play play;
+  late Play? play;
 
   @override
   void initState() {
     super.initState();
-    play = testPlaysData.first;
   }
 
   @override
-  Widget build(BuildContext context) => _PlayOverviewPageView(this);
+  Widget build(BuildContext context) {
+    play = context.select<PlayModel, Play?>((value) => value.selectedPlay);
+    return play != null
+        ? _PlayOverviewPageView(this)
+        : const Scaffold(
+            body: Center(
+              child: Text("No selected play"),
+            ),
+          );
+  }
 
   void handlePlayPressed() async {
-    await PlayPlayCommand(context).execute(play);
+    await PlayPlayCommand(context).execute(play!);
   }
 
   void handleStopPressed() async {
-    await StopPlayCommand(context).execute(play);
+    await StopPlayCommand(context).execute(play!);
   }
 
   void handleRefreshPressed() async {
-    await RefreshPlayCommand(context).execute(play);
+    await RefreshPlayCommand(context).execute(play!);
   }
 
   void handleCancelPressed() async {
-    await CancelPlayCommand(context).execute(play);
+    await CancelPlayCommand(context).execute(play!);
   }
 
   void onWhyFartherSelected(WhyFarther result) {
@@ -76,7 +83,7 @@ class _PlayOverviewPageView
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: buildAppBar(context),
-        body: PlayCastFormView(cast: state.play.cast));
+        body: PlayCastFormView(cast: state.play!.cast));
   }
 
   AppBar buildAppBar(BuildContext context) {
@@ -95,7 +102,7 @@ class _PlayOverviewPageView
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("Clean code linters"),
+        Text(state.play!.title),
         Text("Running",
             style: Theme.of(context)
                 .textTheme

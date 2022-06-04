@@ -22,23 +22,12 @@ class _$AppRouter extends RootStackRouter {
           routeData: routeData, child: const PlaysPage());
     },
     PlayOverviewPageRoute.name: (routeData) {
-      final pathParams = routeData.inheritedPathParams;
-      final args = routeData.argsAs<PlayOverviewPageRouteArgs>(
-          orElse: () =>
-              PlayOverviewPageRouteArgs(id: pathParams.optString('id')));
       return MaterialPageX<dynamic>(
-          routeData: routeData,
-          child: PlayOverviewPage(key: args.key, id: args.id));
+          routeData: routeData, child: const PlayOverviewPage());
     },
     PlayDetailPageRoute.name: (routeData) {
-      final pathParams = routeData.inheritedPathParams;
-      final args = routeData.argsAs<PlayDetailPageRouteArgs>(
-          orElse: () => PlayDetailPageRouteArgs(
-              id: pathParams.optString('id'),
-              pid: pathParams.optString('pid')));
       return MaterialPageX<dynamic>(
-          routeData: routeData,
-          child: PlayDetailPage(key: args.key, id: args.id, pid: args.pid));
+          routeData: routeData, child: const PlayDetailPage());
     }
   };
 
@@ -48,9 +37,9 @@ class _$AppRouter extends RootStackRouter {
             path: '/', redirectTo: '/plays', fullMatch: true),
         RouteConfig(PlaysPageRoute.name, path: '/plays', children: [
           RouteConfig(PlayOverviewPageRoute.name,
-              path: ':id', parent: PlaysPageRoute.name),
+              path: 'overview', parent: PlaysPageRoute.name),
           RouteConfig(PlayDetailPageRoute.name,
-              path: ':id/:pid', parent: PlaysPageRoute.name)
+              path: 'detail', parent: PlaysPageRoute.name)
         ])
       ];
 }
@@ -66,52 +55,17 @@ class PlaysPageRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [PlayOverviewPage]
-class PlayOverviewPageRoute extends PageRouteInfo<PlayOverviewPageRouteArgs> {
-  PlayOverviewPageRoute({Key? key, String? id})
-      : super(PlayOverviewPageRoute.name,
-            path: ':id',
-            args: PlayOverviewPageRouteArgs(key: key, id: id),
-            rawPathParams: {'id': id});
+class PlayOverviewPageRoute extends PageRouteInfo<void> {
+  const PlayOverviewPageRoute()
+      : super(PlayOverviewPageRoute.name, path: 'overview');
 
   static const String name = 'PlayOverviewPageRoute';
 }
 
-class PlayOverviewPageRouteArgs {
-  const PlayOverviewPageRouteArgs({this.key, this.id});
-
-  final Key? key;
-
-  final String? id;
-
-  @override
-  String toString() {
-    return 'PlayOverviewPageRouteArgs{key: $key, id: $id}';
-  }
-}
-
 /// generated route for
 /// [PlayDetailPage]
-class PlayDetailPageRoute extends PageRouteInfo<PlayDetailPageRouteArgs> {
-  PlayDetailPageRoute({Key? key, String? id, String? pid})
-      : super(PlayDetailPageRoute.name,
-            path: ':id/:pid',
-            args: PlayDetailPageRouteArgs(key: key, id: id, pid: pid),
-            rawPathParams: {'id': id, 'pid': pid});
+class PlayDetailPageRoute extends PageRouteInfo<void> {
+  const PlayDetailPageRoute() : super(PlayDetailPageRoute.name, path: 'detail');
 
   static const String name = 'PlayDetailPageRoute';
-}
-
-class PlayDetailPageRouteArgs {
-  const PlayDetailPageRouteArgs({this.key, this.id, this.pid});
-
-  final Key? key;
-
-  final String? id;
-
-  final String? pid;
-
-  @override
-  String toString() {
-    return 'PlayDetailPageRouteArgs{key: $key, id: $id, pid: $pid}';
-  }
 }

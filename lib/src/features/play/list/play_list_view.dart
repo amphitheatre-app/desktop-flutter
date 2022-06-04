@@ -13,11 +13,14 @@
 // limitations under the License.
 
 import 'package:flutter/material.dart';
-
 import 'package:auto_route/auto_route.dart';
+import 'package:provider/provider.dart';
+
 import 'package:colorize_text_avatar/colorize_text_avatar.dart';
 
 import 'package:amphitheatre/src/entities/play/play.dart';
+
+import 'play_list_sidebar.dart';
 
 class PlayListView extends StatelessWidget {
   final List<Play> plays;
@@ -46,20 +49,24 @@ class ListItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        contentPadding: const EdgeInsets.all(8.0),
-        leading: TextAvatar(
-          shape: Shape.Circular,
-          size: 32,
-          numberLetters: 2,
-          upperCase: true,
-          text: play.title,
-          backgroundColor: Colors.blueGrey,
-        ),
-        title: Text(play.title),
-        subtitle: Text(play.description,
-            maxLines: 3, overflow: TextOverflow.ellipsis),
-        onTap: () {
-          context.router.pushNamed('/plays/1');
-        });
+      contentPadding: const EdgeInsets.all(8.0),
+      leading: TextAvatar(
+        shape: Shape.Circular,
+        size: 32,
+        numberLetters: 2,
+        upperCase: true,
+        text: play.title,
+        backgroundColor: Colors.blueGrey,
+      ),
+      title: Text(play.title),
+      subtitle:
+          Text(play.description, maxLines: 3, overflow: TextOverflow.ellipsis),
+      onTap: () => _handleListTaped(context),
+    );
+  }
+
+  void _handleListTaped(BuildContext context) {
+    context.read<PlayListSidebarState>().trySetSelectedPlay(play);
+    //context.router.pushNamed('/plays/overview');
   }
 }

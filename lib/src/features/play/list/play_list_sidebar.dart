@@ -32,18 +32,25 @@ class PlayListSidebar extends StatefulWidget {
   const PlayListSidebar({Key? key}) : super(key: key);
 
   @override
-  State<PlayListSidebar> createState() => _PlayListSidebarState();
+  State<PlayListSidebar> createState() => PlayListSidebarState();
 }
 
-class _PlayListSidebarState extends State<PlayListSidebar> {
+/// Handles all button handlers and business logic functions for the _PlayListSidebarView
+/// Also contains any local view state.
+class PlayListSidebarState extends State<PlayListSidebar> {
+  late PlayModel playModel;
+
   @override
   void initState() {
-    RefreshPlaysCommand(context).execute();
     super.initState();
+
+    playModel = context.read();
+    RefreshPlaysCommand(context).execute();
   }
 
   @override
-  Widget build(BuildContext context) => _PlayListSidebarView(this);
+  Widget build(BuildContext context) =>
+      Provider.value(value: this, child: _PlayListSidebarView(this));
 
   void handleSubmitPressed() async {
     await CreatePlayCommand(context).execute();
@@ -70,11 +77,15 @@ class _PlayListSidebarState extends State<PlayListSidebar> {
               ]);
         });
   }
+
+  void trySetSelectedPlay(Play play) {
+    playModel.selectedPlay = play;
+  }
 }
 
 class _PlayListSidebarView
-    extends WidgetView<PlayListSidebar, _PlayListSidebarState> {
-  const _PlayListSidebarView(_PlayListSidebarState state) : super(state);
+    extends WidgetView<PlayListSidebar, PlayListSidebarState> {
+  const _PlayListSidebarView(PlayListSidebarState state) : super(state);
 
   @override
   Widget build(BuildContext context) {

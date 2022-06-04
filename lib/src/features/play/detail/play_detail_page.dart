@@ -27,10 +27,7 @@ import 'play_cast_drawer.dart';
 
 class PlayDetailPage extends StatefulWidget {
   static GlobalKey<ScaffoldState> scaffoldStateKey = GlobalKey();
-
-  final String? id, pid;
-
-  const PlayDetailPage({Key? key, @PathParam('id') this.id, @PathParam('pid') this.pid}) : super(key: key);
+  const PlayDetailPage({Key? key}) : super(key: key);
 
   @override
   State<PlayDetailPage> createState() => _PlayDetailPageState();

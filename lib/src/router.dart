@@ -19,7 +19,6 @@ import 'package:auto_route/auto_route.dart';
 import 'features/play/plays_page.dart';
 import 'features/play/detail/play_overview_page.dart';
 import 'features/play/detail/play_detail_page.dart';
-import 'entities/play/play.dart';
 
 part 'router.gr.dart';
 
@@ -28,8 +27,8 @@ part 'router.gr.dart';
     routes: <AutoRoute>[
       RedirectRoute(path: '/', redirectTo: '/plays'), 
       AutoRoute(path: '/plays', page: PlaysPage, children: [
-        AutoRoute(path: ':id', page: PlayOverviewPage),
-        AutoRoute(path: ':id/:pid', page: PlayDetailPage)
+        AutoRoute(path: 'overview', page: PlayOverviewPage),
+        AutoRoute(path: 'detail', page: PlayDetailPage)
       ]),
     ])
 class AppRouter extends _$AppRouter {}
