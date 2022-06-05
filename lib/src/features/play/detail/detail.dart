@@ -12,38 +12,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:amphitheatre/src/models/play_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:auto_route/auto_route.dart';
 
-import 'package:amphitheatre/src/entities/play/player.dart';
-import 'package:amphitheatre/src/entities/play/play.dart';
-import 'package:amphitheatre/src/commands/commands.dart';
-import 'package:amphitheatre/src/components/title_toggle_button.dart';
+import 'package:amphitheatre/src/commands/play/cancel_play_command.dart';
+import 'package:amphitheatre/src/commands/play/open_terminal_command.dart';
+import 'package:amphitheatre/src/commands/play/play_play_command.dart';
+import 'package:amphitheatre/src/commands/play/refresh_play_command.dart';
+import 'package:amphitheatre/src/commands/play/stop_play_command.dart';
+
 import 'package:amphitheatre/src/components/widget_view.dart';
 
-import 'play_logs_view.dart';
-import 'play_inspect_view.dart';
-import 'play_stats_view.dart';
-import 'play_cast_drawer.dart';
+import 'package:amphitheatre/src/models/play_model.dart';
+import 'package:amphitheatre/src/entities/play/player.dart';
 
-class PlayDetailPage extends StatefulWidget {
+import '../components/heading.dart';
+
+import 'drawer.dart';
+import 'logs.dart';
+import 'inspect.dart';
+import 'stats.dart';
+
+class Detail extends StatefulWidget {
   static GlobalKey<ScaffoldState> scaffoldStateKey = GlobalKey();
-  const PlayDetailPage({Key? key}) : super(key: key);
+  const Detail({Key? key}) : super(key: key);
 
   @override
-  State<PlayDetailPage> createState() => PlayDetailPageState();
+  State<Detail> createState() => DetailState();
 }
 
-class PlayDetailPageState extends State<PlayDetailPage>
-    with SingleTickerProviderStateMixin {
+class DetailState extends State<Detail> with SingleTickerProviderStateMixin {
   late TabController tabController;
-  late WhyFarther _selection;
-
-  late PlayModel playModel;
-  late Play? play;
-  late Player? player;
 
   List<Tab> tabs = const <Tab>[
     Tab(text: 'Logs'),
@@ -55,11 +54,6 @@ class PlayDetailPageState extends State<PlayDetailPage>
   void initState() {
     tabController = TabController(
         vsync: this, length: tabs.length, animationDuration: Duration.zero);
-
-    playModel = context.read();
-    play = playModel.selectedPlay;
-    player = playModel.selectedPlayer;
-
     super.initState();
   }
 
@@ -74,50 +68,54 @@ class PlayDetailPageState extends State<PlayDetailPage>
     return Provider.value(value: this, child: _PlayDetailPageView(this));
   }
 
-  void openMenu() => PlayDetailPage.scaffoldStateKey.currentState?.openDrawer();
+  void openMenu() => Detail.scaffoldStateKey.currentState?.openDrawer();
 
   void handleTerminalPressed() async {
+    var play = context.read<PlayModel>().selectedPlay;
     await OpenTerminalCommand(context).execute(play!);
   }
 
   void handlePlayPressed() async {
+    var play = context.read<PlayModel>().selectedPlay;
     await PlayPlayCommand(context).execute(play!);
   }
 
   void handleStopPressed() async {
+    var play = context.read<PlayModel>().selectedPlay;
     await StopPlayCommand(context).execute(play!);
   }
 
   void handleRefreshPressed() async {
+    var play = context.read<PlayModel>().selectedPlay;
     await RefreshPlayCommand(context).execute(play!);
   }
 
   void handleCancelPressed() async {
+    var play = context.read<PlayModel>().selectedPlay;
     await CancelPlayCommand(context).execute(play!);
   }
 
-  void onWhyFartherSelected(WhyFarther result) {
-    setState(() {
-      _selection = result;
-    });
+  void onPlayerSelected(Player player) {
+    context.read<PlayModel>().selectedPlayer = player;
+    //context.read<PlayScreenState>().goto(PAGE.detail);
   }
 
-  void trySetSelectedPlayer(Player player) {
-    playModel.selectedPlayer = player;
-    context.router.pushNamed('/plays/detail');
+  void onWhyFartherSelected(WhyFarther result) {
+    //
   }
 }
 
 enum WhyFarther { harder, smarter, selfStarter, tradingCharter }
 
-class _PlayDetailPageView
-    extends WidgetView<PlayDetailPage, PlayDetailPageState> {
-  const _PlayDetailPageView(PlayDetailPageState state) : super(state);
+class _PlayDetailPageView extends WidgetView<Detail, DetailState> {
+  const _PlayDetailPageView(DetailState state) : super(state);
 
   @override
   Widget build(BuildContext context) {
+    // var play = context.select<PlayModel, Play?>((value) => value.selectedPlay);
+
     return Scaffold(
-      key: PlayDetailPage.scaffoldStateKey,
+      key: Detail.scaffoldStateKey,
       appBar: buildAppBar(context),
       body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -138,7 +136,7 @@ class _PlayDetailPageView
                   ]),
             )
           ]),
-      drawer: PlayCastDrawer(cast: state.play!.cast),
+      drawer: const CastDrawer(),
     );
   }
 
@@ -147,9 +145,10 @@ class _PlayDetailPageView
         context.select<PlayModel, Player?>((value) => value.selectedPlayer);
     return AppBar(
       elevation: 0.0,
-      title: TitleToggleButton(
+      title: Heading(
+          icon: Icons.menu,
           title: player!.title,
-          subtitle: player.status,
+          status: player.status,
           onPressed: state.openMenu),
       centerTitle: false,
       actions: buildActions(),

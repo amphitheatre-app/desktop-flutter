@@ -20,9 +20,9 @@ class Play {
   final int id;
   final String title;
   final String description;
-  final List<Player> _cast = testCastData;
+  final String status = 'RUNNING';
 
-  List<Player> get cast => _cast;
+  List<Player> get cast => testCastData;
 }
 
 final List<Play> testPlaysData = <Play>[

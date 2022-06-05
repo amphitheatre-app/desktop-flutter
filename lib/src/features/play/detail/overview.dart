@@ -15,103 +15,111 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:amphitheatre/src/commands/commands.dart';
-import 'package:amphitheatre/src/components/widget_view.dart';
-import 'package:amphitheatre/src/entities/play/play.dart';
-import 'package:amphitheatre/src/models/play_model.dart';
+import 'package:amphitheatre/src/commands/play/cancel_play_command.dart';
+import 'package:amphitheatre/src/commands/play/play_play_command.dart';
+import 'package:amphitheatre/src/commands/play/refresh_play_command.dart';
+import 'package:amphitheatre/src/commands/play/stop_play_command.dart';
 
-import 'play_cast_form_view.dart';
+import 'package:amphitheatre/src/components/placeholder.dart';
+import 'package:amphitheatre/src/components/styled_list_view.dart';
+import 'package:amphitheatre/src/components/widget_view.dart';
+
+import 'package:amphitheatre/src/models/play_model.dart';
+import 'package:amphitheatre/src/entities/play/play.dart';
+import 'package:amphitheatre/src/entities/play/player.dart';
+
+import '../components/cast.dart';
+import '../components/heading.dart';
+import '../screen.dart';
 
 enum WhyFarther { harder, smarter, selfStarter, tradingCharter }
 
-class PlayOverviewPage extends StatefulWidget {
-  const PlayOverviewPage({Key? key}) : super(key: key);
+class Overview extends StatefulWidget {
+  const Overview({Key? key}) : super(key: key);
 
   @override
-  State<PlayOverviewPage> createState() => _PlayOverviewPageState();
+  State<Overview> createState() => _OverviewState();
 }
 
-class _PlayOverviewPageState extends State<PlayOverviewPage> {
-  late WhyFarther _selection;
-  
-  late PlayModel playModel;
-  late Play? play;
-
-  @override
-  void initState() {
-    playModel = context.read();
-    play = playModel.selectedPlay;
-    super.initState();
-  }
-
+class _OverviewState extends State<Overview> {
   @override
   Widget build(BuildContext context) {
-    return play != null
-        ? _PlayOverviewPageView(this)
-        : const Scaffold(
-            body: Center(
-              child: Text("No selected play"),
-            ),
-          );
+    var play = context.select<PlayModel, Play?>((value) => value.selectedPlay);
+    return ContentPlaceholder(
+      hasContent: () => play != null,
+      content: _OverviewView(this),
+      placeholder: const Scaffold(
+        body: Center(
+          child: Text("No selected play"),
+        ),
+      ),
+    );
   }
 
   void handlePlayPressed() async {
+    var play = context.read<PlayModel>().selectedPlay;
     await PlayPlayCommand(context).execute(play!);
   }
 
   void handleStopPressed() async {
+    var play = context.read<PlayModel>().selectedPlay;
     await StopPlayCommand(context).execute(play!);
   }
 
   void handleRefreshPressed() async {
+    var play = context.read<PlayModel>().selectedPlay;
     await RefreshPlayCommand(context).execute(play!);
   }
 
   void handleCancelPressed() async {
+    var play = context.read<PlayModel>().selectedPlay;
     await CancelPlayCommand(context).execute(play!);
   }
 
+  void onPlayerSelected(Player player) {
+    context.read<PlayModel>().selectedPlayer = player;
+    context.read<PlayScreenState>().goto(PAGE.detail);
+  }
+
   void onWhyFartherSelected(WhyFarther result) {
-    setState(() {
-      _selection = result;
-    });
+    //
   }
 }
 
-class _PlayOverviewPageView
-    extends WidgetView<PlayOverviewPage, _PlayOverviewPageState> {
-  const _PlayOverviewPageView(_PlayOverviewPageState state) : super(state);
+class _OverviewView extends WidgetView<Overview, _OverviewState> {
+  const _OverviewView(_OverviewState state) : super(state);
 
   @override
   Widget build(BuildContext context) {
+    var play = context.select<PlayModel, Play?>((value) => value.selectedPlay);
+
     return Scaffold(
-        appBar: buildAppBar(context),
-        body: PlayCastFormView(cast: state.play!.cast));
+      appBar: buildAppBar(context),
+      body: StyledListView<Player>(
+        items: play!.cast,
+        itemBuilder: (player, index) {
+          return CastFormView(
+            player: player,
+            onTap: () => state.onPlayerSelected(player),
+          );
+        },
+      ),
+    );
   }
 
   AppBar buildAppBar(BuildContext context) {
+    var play = context.select<PlayModel, Play?>((value) => value.selectedPlay);
+
     return AppBar(
-      title: buildTitle(context),
+      title: Heading(
+        title: play!.title,
+        status: play.status,
+      ),
       centerTitle: false,
       actions: buildActions(),
       titleTextStyle: const TextStyle(fontWeight: FontWeight.bold),
       automaticallyImplyLeading: false,
       elevation: 0.0,
-    );
-  }
-
-  Column buildTitle(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(state.play!.title),
-        Text("Running",
-            style: Theme.of(context)
-                .textTheme
-                .overline!
-                .copyWith(color: Colors.green)),
-      ],
     );
   }
 

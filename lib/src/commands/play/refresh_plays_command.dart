@@ -14,8 +14,9 @@
 
 import 'package:flutter/widgets.dart';
 
-import '../commands.dart';
 import 'package:amphitheatre/src/entities/play/play.dart';
+
+import '../abstract_command.dart';
 
 class RefreshPlaysCommand extends AbstractCommand {
   RefreshPlaysCommand(BuildContext c) : super(c);

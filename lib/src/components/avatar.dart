@@ -13,22 +13,24 @@
 // limitations under the License.
 
 import 'package:flutter/material.dart';
+import 'package:colorize_text_avatar/colorize_text_avatar.dart';
 
-import 'package:auto_route/auto_route.dart';
+class Avatar extends StatelessWidget {
+  final String text;
+  final double size;
 
-import 'features/play/plays_page.dart';
-import 'features/play/detail/play_overview_page.dart';
-import 'features/play/detail/play_detail_page.dart';
+  const Avatar({Key? key, required this.text, this.size = 32})
+      : super(key: key);
 
-part 'router.gr.dart';
-
-@MaterialAutoRouter(
-    //replaceInRouteName: 'Page, Route',
-    routes: <AutoRoute>[
-      RedirectRoute(path: '/', redirectTo: '/plays'), 
-      AutoRoute(path: '/plays', page: PlaysPage, children: [
-        AutoRoute(path: 'overview', page: PlayOverviewPage),
-        AutoRoute(path: 'detail', page: PlayDetailPage)
-      ]),
-    ])
-class AppRouter extends _$AppRouter {}
+  @override
+  Widget build(BuildContext context) {
+    return TextAvatar(
+      shape: Shape.Circular,
+      size: size,
+      numberLetters: 2,
+      upperCase: true,
+      text: text,
+      backgroundColor: Colors.blueGrey,
+    );
+  }
+}

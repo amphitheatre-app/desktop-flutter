@@ -15,7 +15,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:time/time.dart';
 
-import '../commands.dart';
+import '../abstract_command.dart';
 import 'refresh_plays_command.dart';
 
 class PollPlaysCommand extends AbstractCommand with CancelableCommandMixin {

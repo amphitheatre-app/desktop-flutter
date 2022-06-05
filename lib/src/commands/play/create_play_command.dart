@@ -14,12 +14,19 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:amphitheatre/src/features/play/compose/compose.dart';
+
 import '../abstract_command.dart';
 
 class CreatePlayCommand extends AbstractCommand {
   CreatePlayCommand(BuildContext c) : super(c);
 
-  Future<bool> execute() async {
-    return Future.value(true);
+  Future<void> execute(BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const Compose();
+      },
+    );
   }
 }

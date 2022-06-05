@@ -31,32 +31,42 @@ class Modal extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Center(
-          child: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).dialogBackgroundColor,
-              ),
-              constraints: const BoxConstraints(
-                  minWidth: 300, maxWidth: 600, minHeight: 200, maxHeight: 400),
-              padding: const EdgeInsets.all(16),
-              child: Column(
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).dialogBackgroundColor,
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
+          ),
+          constraints: const BoxConstraints(
+              minWidth: 300, maxWidth: 600, minHeight: 200, maxHeight: 400),
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Row(
                 children: [
-                  Row(children: [
-                    Expanded(child: Text(title, maxLines: 1)),
-                    IconButton(
-                        onPressed: () => Navigator.pop(context),
-                        icon: const Icon(
-                          Icons.close,
-                          size: 16,
-                        ))
-                  ]),
-                  Expanded(child: SingleChildScrollView(child: body)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: actions != null ? actions! : [],
+                  Expanded(
+                    child: Text(
+                      title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(Icons.close, size: 20),
                   )
                 ],
-              ))),
+              ),
+              Expanded(child: SingleChildScrollView(child: body)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: actions != null ? actions! : [],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
