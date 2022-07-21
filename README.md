@@ -13,6 +13,7 @@ microservices. You can iterate your application source code locally, then deploy
 to a local or remote Kubernetes cluster, just like docker build && kubectl apply
 or docker-compose up.
 
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/amphitheatre-app/desktop/Snapshot)
 [![License](https://img.shields.io/github/license/amphitheatre-app/desktop)](https://github.com/amphitheatre-app/desktop/blob/master/LICENSE)
 [![GitHub
 contributors](https://img.shields.io/github/contributors/amphitheatre-app/desktop)](https://github.com/amphitheatre-app/desktop/graphs/contributors)
@@ -43,6 +44,10 @@ If you would like to try these for Flutter for web, you can use `flutter run -d
 chrome`. Note that Flutter for web is currently a technical preview and not all
 of features will work correctly. For more information on enabling Flutter for
 web follow the [setup instructions](https://flutter.dev/docs/get-started/web).
+
+## Nightly Builds
+
+Get the latest nightly builds of Amphitheatre Desktop [here](https://nightly.link/amphitheatre-app/desktop/workflows/snapshot/master)
 
 ## Localization
 
