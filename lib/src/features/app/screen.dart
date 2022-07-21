@@ -27,10 +27,7 @@ class _AppsPageState extends State<AppsPage> {
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.fromLTRB(80, 0, 80, 20),
-        child: Column(children: [
-          buildBannerView(),
-          buildAppsGridView()
-        ]),
+        child: Column(children: [buildBannerView(), buildAppsGridView()]),
       ),
     );
   }

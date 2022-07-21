@@ -19,7 +19,6 @@ import 'detail/detail.dart';
 import 'detail/overview.dart';
 import 'sidebar/sidebar.dart';
 
-
 enum PAGE { overview, detail }
 
 class PlayScreen extends StatefulWidget {

@@ -35,7 +35,7 @@ abstract class AbstractCommand {
   T getProvided<T>() => Provider.of<T>(context, listen: false);
 
   /// Convenience lookup methods for all commands to share
-  
+
   /// Models
   PlayModel get playModel => getProvided();
 

@@ -29,7 +29,6 @@ import 'package:amphitheatre/src/entities/play/play.dart';
 
 import '../screen.dart';
 
-
 class Sidebar extends StatefulWidget {
   const Sidebar({Key? key}) : super(key: key);
 

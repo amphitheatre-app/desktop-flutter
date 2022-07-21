@@ -21,7 +21,6 @@ import 'src/models/play_model.dart';
 import 'src/services/play_service.dart';
 
 void main() async {
-
   // Set up the window options.
   WidgetsFlutterBinding.ensureInitialized();
   await windowManager.ensureInitialized();
