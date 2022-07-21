@@ -1,0 +1,30 @@
+name: Tests
+on: push
+
+# Declare default permissions as read only.
+permissions: read-all
+
+jobs:
+  unit-test:
+    name: Unit tests on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          cache: true
+
+      # Get flutter dependencies.
+      - run: flutter pub get -v
+
+      # Check for any formatting issues in the code
+      - run: flutter format --set-exit-if-changed .
+
+      # Statically analyze the Dart code for any errors.
+      - run: flutter analyze .
+
+      # Run Flutter unit tests
+      - run: flutter test
