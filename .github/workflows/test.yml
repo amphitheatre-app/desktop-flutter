@@ -1,5 +1,18 @@
 name: Tests
-on: push
+
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "master" ]
+    paths-ignore:
+      - '*.md'
+      - '.github/ISSUE_TEMPLATE/**'
+      - .github/PULL_REQUEST_TEMPLATE.md
+  pull_request:
+    paths-ignore:
+      - '*.md'
+      - '.github/ISSUE_TEMPLATE/**'
+      - .github/PULL_REQUEST_TEMPLATE.md
 
 # Declare default permissions as read only.
 permissions: read-all
@@ -12,20 +25,24 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
+      # Set up Flutter.
+      - name: Clone Flutter repository with master channel
+        uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
-          cache: true
+          channel: master
+      - run: flutter doctor -v
 
-      # Get flutter dependencies.
+      # Checkout code and get packages.
+      - name: Checkout code
+        uses: actions/checkout@v3
       - run: flutter pub get
 
-      # Check for any formatting issues in the code
-      - run: flutter format --set-exit-if-changed .
-
-      # Statically analyze the Dart code for any errors.
-      - run: flutter analyze .
-
-      # Run Flutter unit tests
-      - run: flutter test
+      - name: Run code generation
+        run: flutter pub run build_runner build
+        
+      # Analyze, check formatting, and run unit tests.
+      - run: flutter analyze
+      - name: Ensure the Dart code is formatted correctly
+        run: flutter format --set-exit-if-changed --dry-run .
+      - name: Run Flutter unit tests
+        run: flutter test
