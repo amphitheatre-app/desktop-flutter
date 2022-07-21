@@ -58,8 +58,7 @@ class NetworkApiService extends BaseApiService {
         throw NotFountException(response.body.toString());
       case 500:
       default:
-        throw FetchDataException(
-            'Error occured while communication with server'
+        throw FetchDataException('Error occured while communication with server'
             ' with status code: ${response.statusCode}');
     }
   }
