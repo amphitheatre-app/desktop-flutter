@@ -1,18 +1,6 @@
 name: Tests
 
-on:
-  # Triggers the workflow on push or pull request events but only for the "master" branch
-  push:
-    branches: [ "master" ]
-    paths-ignore:
-      - '*.md'
-      - '.github/ISSUE_TEMPLATE/**'
-      - .github/PULL_REQUEST_TEMPLATE.md
-  pull_request:
-    paths-ignore:
-      - '*.md'
-      - '.github/ISSUE_TEMPLATE/**'
-      - .github/PULL_REQUEST_TEMPLATE.md
+on: push
 
 # Declare default permissions as read only.
 permissions: read-all

@@ -33,19 +33,19 @@ jobs:
           - os: macos-latest
             target: macOS
             build_target: macos
-            build_path: build/macos/Build/Products/Release
+            build_path: build/macos/Build/Products/Debug
             asset_extension: .zip
             asset_content_type: application/zip
           - os: windows-latest
             target: Windows
             build_target: windows
-            build_path: build\windows\runner\Release
+            build_path: build\windows\runner\Debug
             asset_extension: .zip
             asset_content_type: application/zip
           - os: ubuntu-latest
             target: Linux
             build_target: linux
-            build_path: build/linux/x64/release/bundle
+            build_path: build/linux/x64/debug/bundle
             asset_extension: .tar.gz
             asset_content_type: application/gzip
       # Disable fail-fast as we want results from all even if one fails.
@@ -80,7 +80,7 @@ jobs:
         run: flutter pub run build_runner build      
 
       # Build the application.
-      - run: flutter build -v ${{ matrix.build_target }} --release
+      - run: flutter build -v ${{ matrix.build_target }} --debug
 
       # Package the build.
 
