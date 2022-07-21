@@ -1,8 +1,8 @@
 name: Snapshot
 
 env:
-  APP_NAME: Amphitheatre Desktop
-  PACKAGE_NAME: Amphitheatre-Desktop
+  APP_NAME: 'Amphitheatre\ Desktop'
+  PACKAGE_NAME: 'Amphitheatre-Desktop'
 
 on:
   # Triggers the workflow on push or pull request events but only for the "master" branch
