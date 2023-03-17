@@ -1,10 +1,10 @@
 
 
-# Amphitheatre Desktop
+# Amphitheatre Desktop (Flutter)
 
 ![Amphitheatre Desktop Screenshot](./assets/images/screenshot.png)
 
-Amphitheatre Desktop is an open source [Flutter](https://flutter.dev)-based
+Amphitheatre Desktop (Flutter) is an open source [Flutter](https://flutter.dev)-based
 application that enables you to interact with Amphitheatre using a GUI instead
 of the command line or a web browser. Amphitheatre Desktop encourages you and
 your team to collaborate using best practices with Amphitheatre. You can use
@@ -13,12 +13,12 @@ microservices. You can iterate your application source code locally, then deploy
 to a local or remote Kubernetes cluster, just like docker build && kubectl apply
 or docker-compose up.
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/amphitheatre-app/desktop/Snapshot)
-[![License](https://img.shields.io/github/license/amphitheatre-app/desktop)](https://github.com/amphitheatre-app/desktop/blob/master/LICENSE)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/amphitheatre-app/desktop-flutter/Snapshot)
+[![License](https://img.shields.io/github/license/amphitheatre-app/desktop-flutter)](https://github.com/amphitheatre-app/desktop-flutter/blob/master/LICENSE)
 [![GitHub
-contributors](https://img.shields.io/github/contributors/amphitheatre-app/desktop)](https://github.com/amphitheatre-app/desktop/graphs/contributors)
+contributors](https://img.shields.io/github/contributors/amphitheatre-app/desktop-flutter)](https://github.com/amphitheatre-app/desktop-flutter/graphs/contributors)
 [![GitHub
-issues](https://img.shields.io/github/issues/amphitheatre-app/desktop)](https://github.com/amphitheatre-app/desktop/issues)
+issues](https://img.shields.io/github/issues/amphitheatre-app/desktop-flutter)](https://github.com/amphitheatre-app/desktop-flutter/issues)
 
 
 ## Getting Started
@@ -47,7 +47,7 @@ web follow the [setup instructions](https://flutter.dev/docs/get-started/web).
 
 ## Nightly Builds
 
-Get the latest nightly builds of Amphitheatre Desktop [here](https://nightly.link/amphitheatre-app/desktop/workflows/snapshot/master)
+Get the latest nightly builds of Amphitheatre Desktop [here](https://nightly.link/amphitheatre-app/desktop-flutter/workflows/snapshot/master)
 
 ## Localization
 
@@ -66,6 +66,6 @@ submitting pull requests to the project.
 
 ## License
 
-Amphitheatre Desktop is a free and open source software, it is licensed under
+Amphitheatre Desktop (Flutter) is a free and open source software, it is licensed under
 the [Apache License
-2.0](https://github.com/amphitheatre-app/desktop/blob/master/LICENSE)
+2.0](https://github.com/amphitheatre-app/desktop-flutter/blob/master/LICENSE)
